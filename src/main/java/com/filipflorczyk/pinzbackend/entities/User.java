@@ -1,6 +1,5 @@
 package com.filipflorczyk.pinzbackend.entities;
 
-import com.filipflorczyk.pinzbackend.entities.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;

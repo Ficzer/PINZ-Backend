@@ -1,14 +1,17 @@
 package com.filipflorczyk.pinzbackend.repositories;
 
 import com.filipflorczyk.pinzbackend.entities.User;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-@RepositoryRestResource(path = "users")
-public interface UserRepository extends PagingAndSortingRepository<User, Long> {
+@Repository
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
-    List<User> findByLastName(@Param("last-name") String lastName);
+    List<User> findByUserName(String userName);
+    Page<User> findByUserName(String userName, Pageable pageable);
 }

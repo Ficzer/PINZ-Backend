@@ -2,6 +2,7 @@ package com.filipflorczyk.pinzbackend.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 

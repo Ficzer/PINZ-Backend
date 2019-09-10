@@ -17,8 +17,10 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/users")
+@Validated
 public class UserController {
 
     private UserService userService;
@@ -35,21 +38,17 @@ public class UserController {
         this.userService = userService;
     }
 
-//    @GetMapping(produces = { "application/hal+json" }, params = {"search", "page", "size"})
-//    public ResponseEntity<PagedResources<Resource<UserDto>>> getAllWithRsqlAndPagination(@RequestParam(value = "search", required = false) String search,
-//                                                                            Pageable pageable){
-//
-//        Node rootNode = new RSQLParser().parse(search);
-//        Specification<User> spec = rootNode.accept(new CustomRsqlVisitor<User>());
-//        Page<User> userPage = userService.findAll(spec, pageable);
-//
-//        Page<UserDto> userDtoPage = addSelfLinksToPageContent(userPage);
-//
-//        Link link = linkTo(methodOn(UserController.class).getAllWithRsqlAndPagination(search, pageable)).withSelfRel();
-//
-//        return new ResponseEntity<>(assembler.toResource(userDtoPage, link), HttpStatus.OK);
-//    }
-
+    /**
+     * Generates endpoint in user controller which returns all users passing RSQL filtering
+     * with attached links. This method has also enabled pagination options and generating links for
+     * paged resources. Returned data are Dto's without internal information.
+     *
+     * @param search      RSQL search filtering sentence
+     * @param pageable    pagination and sorting options given in url, {@link(Pageable)}
+     * @param assembler   Paged resource assembler passed to method as tool
+     * @return            {@linkResponseEntity} with HTTP Ok status and body containing paged resource
+     *                    in form of json+hal containing {@link(UserDto)}
+     */
     @GetMapping(produces = { "application/hal+json" }, params = {"search"})
     public ResponseEntity<PagedResources<Resource<UserDto>>> getAllWithRsql(@RequestParam(value = "search", required = false) String search,
                                                                             Pageable pageable,
@@ -64,6 +63,16 @@ public class UserController {
         return new ResponseEntity<>(assembler.toResource(userDtoPage), HttpStatus.OK);
     }
 
+    /**
+     * Generates endpoint in user controller which returns all users
+     * with attached links. This method has also enabled pagination options and generating links for
+     * paged resources. Returned data are Dto's without internal information.
+     *
+     * @param pageable    pagination and sorting options given in url, {@link(Pageable)}
+     * @param assembler   Paged resource assembler passed to method as tool
+     * @return            {@linkResponseEntity} with HTTP Ok status and body containing paged resource
+     *                    in form of json+hal containing {@link(UserDto)}
+     */
     @GetMapping(produces = { "application/hal+json" })
     public ResponseEntity<PagedResources<Resource<UserDto>>> getAll(Pageable pageable,
                                                                     PagedResourcesAssembler assembler){
@@ -74,6 +83,14 @@ public class UserController {
         return new ResponseEntity<>(assembler.toResource(userDtoPage), HttpStatus.OK);
     }
 
+    /**
+     * Generates end point in user controller which returns one user with given id
+     * and correct links for this user. Returned data are Dto without internal information.
+     *
+     * @param  id         Given id number of specific user
+     * @return            {@linkResponseEntity} with HTTP Ok status and body containing
+     *                    resource with {@link(UserDto)} and self link
+     */
     @GetMapping(value = "/{id}", produces = { "application/hal+json" })
     public ResponseEntity<UserDto> getOne(@PathVariable Long id){
 
@@ -84,14 +101,27 @@ public class UserController {
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
+    /**
+     * Generates end point in user controller allows to add one validated user passed in
+     * request body in form of json.
+     *
+     * @param  userDto    Given user
+     * @return            Resource containing {@link(UserDto)} and self link
+     */
     @PostMapping(produces = { "application/hal+json" })
-    public ResponseEntity<HttpStatus> addOne(@RequestBody UserDto userDto){
+    public ResponseEntity<HttpStatus> addOne(@Valid @RequestBody UserDto userDto){
 
         UserDto user = userService.convertToDto(userService.add(userDto));
 
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    /**
+     * Converts page containing {@link(User)} into its dto with added self links
+     *
+     * @param  userPage   Page of given users
+     * @return            Page of {@link(UserDto)}
+     */
     private Page<UserDto> addSelfLinksToPageContent(Page<User> userPage) {
 
         final List<Long> idList = new ArrayList<>();

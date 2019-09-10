@@ -15,6 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
@@ -107,5 +108,17 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getStatus());
     } //TODO Replace it with more specific handler with better formed error message, IllegalArgumentException is to basic exception
+
+    @ExceptionHandler({ EntityNotFoundException.class })
+    public ResponseEntity<Object> handleEntityNotFoundException(
+            EntityNotFoundException ex, WebRequest request) {
+        String error =
+                ex.getLocalizedMessage();
+
+        ApiError apiError =
+                new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+        return new ResponseEntity<Object>(
+                apiError, new HttpHeaders(), apiError.getStatus());
+    }
 
 }

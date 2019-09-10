@@ -19,6 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
@@ -90,10 +93,14 @@ public class UserController {
     }
 
     private Page<UserDto> addSelfLinksToPageContent(Page<User> userPage) {
+
+        final List<Long> idList = new ArrayList<>();
+        userPage.forEach(user -> {idList.add(user.getId());});
+
         Page<UserDto> userDtoPage = userPage.map(userService::convertToDto);
 
         for(long i=0; i<userDtoPage.getNumberOfElements(); i++){
-            userDtoPage.getContent().get((int)i).add(linkTo(methodOn(UserController.class).getOne(i)).withSelfRel());
+            userDtoPage.getContent().get((int)i).add(linkTo(methodOn(UserController.class).getOne(idList.get((int)i))).withSelfRel());
         }
 
         return userDtoPage;

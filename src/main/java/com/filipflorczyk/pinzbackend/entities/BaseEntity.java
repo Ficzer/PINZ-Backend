@@ -2,7 +2,6 @@ package com.filipflorczyk.pinzbackend.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 
@@ -15,6 +14,6 @@ public class BaseEntity {
     protected Long version;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 }

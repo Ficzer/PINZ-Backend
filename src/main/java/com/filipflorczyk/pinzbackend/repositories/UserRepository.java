@@ -12,6 +12,4 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
-    List<User> findByUserName(String userName);
-    Page<User> findByUserName(String userName, Pageable pageable);
 }

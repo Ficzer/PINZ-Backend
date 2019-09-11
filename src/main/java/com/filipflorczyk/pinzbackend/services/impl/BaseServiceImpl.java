@@ -55,10 +55,10 @@ public class BaseServiceImpl
     }
 
     @Override
-    public TModel add(UDto dto) {
+    public UDto add(UDto dto) {
         TModel savedEntity = repository.save(convertToEntity(dto));
         savedEntity.setVersion(0L);
-        return savedEntity;
+        return convertToDto(savedEntity);
     }
 
     @Override
@@ -75,11 +75,11 @@ public class BaseServiceImpl
     }
 
     @Override
-    public TModel findById(Long id) {
+    public UDto findById(Long id) {
         TModel model = repository
                 .findById(id)
                 .orElseThrow(() -> entityNotFoundException(id, "Entity"));
-        return model;
+        return convertToDto(model);
     }
 
     @Override

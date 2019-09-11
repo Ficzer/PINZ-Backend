@@ -94,7 +94,7 @@ public class UserController {
     @GetMapping(value = "/{id}", produces = { "application/hal+json" })
     public ResponseEntity<UserDto> getOne(@PathVariable Long id){
 
-        UserDto user = userService.convertToDto(userService.findById(id));
+        UserDto user = userService.findById(id);
 
         user.add(linkTo(methodOn(UserController.class).getOne(id)).withSelfRel());
 
@@ -111,7 +111,7 @@ public class UserController {
     @PostMapping(produces = { "application/hal+json" })
     public ResponseEntity<HttpStatus> addOne(@Valid @RequestBody UserDto userDto){
 
-        UserDto user = userService.convertToDto(userService.add(userDto));
+        UserDto user = userService.add(userDto);
 
         return new ResponseEntity(HttpStatus.CREATED);
     }

@@ -1,6 +1,8 @@
 package com.filipflorczyk.pinzbackend.exceptions;
 
+import com.filipflorczyk.pinzbackend.services.interfaces.LoggerService;
 import cz.jirutka.rsql.parser.RSQLParserException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,9 +22,13 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @Autowired
+    private LoggerService loggerService;
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
@@ -30,6 +36,8 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
             HttpHeaders headers,
             HttpStatus status,
             WebRequest request) {
+
+        loggerService.log(Level.SEVERE, "", ex.getMessage(), ex);
 
         List<String> errors = new ArrayList<String>();
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
@@ -50,6 +58,9 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     protected ResponseEntity<Object> handleMissingServletRequestParameter(
             MissingServletRequestParameterException ex, HttpHeaders headers,
             HttpStatus status, WebRequest request) {
+
+        loggerService.log(Level.SEVERE, "", ex.getMessage(), ex);
+
         String error = ex.getParameterName() + " parameter is missing";
 
         ApiError apiError =
@@ -61,6 +72,9 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler({ ConstraintViolationException.class })
     public ResponseEntity<Object> handleConstraintViolation(
             ConstraintViolationException ex, WebRequest request) {
+
+        loggerService.log(Level.SEVERE, "", ex.getMessage(), ex);
+
         List<String> errors = new ArrayList<String>();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
             errors.add(violation.getRootBeanClass().getName() + " " +
@@ -76,6 +90,9 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler({ MethodArgumentTypeMismatchException.class })
     public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
             MethodArgumentTypeMismatchException ex, WebRequest request) {
+
+        loggerService.log(Level.SEVERE, "", ex.getMessage(), ex);
+
         String error =
                 ex.getName() + " should be of type " + ex.getRequiredType().getName();
 
@@ -88,6 +105,9 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler({ PropertyReferenceException.class })
     public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
             PropertyReferenceException ex, WebRequest request) {
+
+        loggerService.log(Level.SEVERE, "", ex.getMessage(), ex);
+
         String error =
                 ex.getLocalizedMessage();
 
@@ -100,6 +120,9 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<Object> handleIllegalArgumentException(
             IllegalArgumentException ex, WebRequest request) {
+
+        loggerService.log(Level.SEVERE, "", ex.getMessage(), ex);
+
         String error =
                 ex.getLocalizedMessage();
 
@@ -112,6 +135,9 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler({ EntityNotFoundException.class })
     public ResponseEntity<Object> handleEntityNotFoundException(
             EntityNotFoundException ex, WebRequest request) {
+
+        loggerService.log(Level.SEVERE, "", ex.getMessage(), ex);
+
         String error =
                 ex.getLocalizedMessage();
 

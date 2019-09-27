@@ -17,7 +17,7 @@ public class Post extends BaseEntity {
 
     private LocalDateTime creationDateTime;
 
-    private Integer likes;
+    private Integer stars;
 
     @ManyToOne
     @JoinColumn(name = "club_id")

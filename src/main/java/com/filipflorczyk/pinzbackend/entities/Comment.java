@@ -19,7 +19,7 @@ public class Comment extends BaseEntity {
 
     private LocalDateTime creationDateTime;
 
-    private Integer likes;
+    private Integer stars;
 
     @ManyToOne
     @JoinColumn(name = "post_id")

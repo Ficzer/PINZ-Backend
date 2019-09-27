@@ -24,9 +24,9 @@ public class Match extends BaseEntity {
 
     private Integer awayClubGoals;
 
-    private Double homeClubPossessionPercentage;
+    private Integer homeClubPossessionPercentage;
 
-    private Double awayClubPossessionPercentage;
+    private Integer awayClubPossessionPercentage;
 
     private Integer homeClubShotsOnTarget;
 

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -18,11 +19,18 @@ public class Player extends BaseEntity {
 
     private String pseudonym;
 
+    private LocalDateTime birthDate;
+
+    private Integer height;
+
+    @Enumerated(EnumType.STRING)
+    private FieldPosition fieldPosition;
+
     private Integer goals;
 
     private Integer appearances;
 
-    private Integer likes;
+    private Integer stars;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)

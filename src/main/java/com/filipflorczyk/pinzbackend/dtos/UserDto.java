@@ -1,6 +1,5 @@
 package com.filipflorczyk.pinzbackend.dtos;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;

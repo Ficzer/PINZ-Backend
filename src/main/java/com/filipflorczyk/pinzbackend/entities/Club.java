@@ -13,6 +13,8 @@ import java.util.List;
 @Table(name = "clubs")
 public class Club extends BaseEntity {
 
+    private String name;
+
     @OneToMany(mappedBy = "club",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Player> players = new ArrayList<>();
@@ -29,10 +31,6 @@ public class Club extends BaseEntity {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Match> awayMatches;
 
-    @OneToMany(mappedBy = "match",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<PlayerMatchStat> playerMatchStats;
-
     @OneToMany(mappedBy = "club",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Event> eventList;
@@ -41,7 +39,7 @@ public class Club extends BaseEntity {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Post> postList;
 
-    @ManyToOne
-    @JoinColumn(name = "league_id")
-    private League league;
+    @OneToMany(mappedBy = "club",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<ClubStatistic> clubStatistics;
 }

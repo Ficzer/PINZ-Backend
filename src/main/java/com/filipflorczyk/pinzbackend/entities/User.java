@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class User extends BaseEntity {
 
     private String userName;
+
     private String userPassword;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

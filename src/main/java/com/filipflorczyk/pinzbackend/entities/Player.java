@@ -12,6 +12,18 @@ import java.util.List;
 @Table(name = "players")
 public class Player extends BaseEntity {
 
+    private String firstName;
+
+    private String lastName;
+
+    private String pseudonym;
+
+    private Integer goals;
+
+    private Integer appearances;
+
+    private Integer likes;
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -35,4 +47,12 @@ public class Player extends BaseEntity {
     @OneToMany(mappedBy = "receiverPlayer",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Message> receivedMessages;
+
+    @OneToMany(mappedBy = "author",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Post> posts;
+
+    @OneToMany(mappedBy = "author",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Comment> comments;
 }

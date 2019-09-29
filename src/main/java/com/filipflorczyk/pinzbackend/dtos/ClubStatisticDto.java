@@ -3,6 +3,7 @@ package com.filipflorczyk.pinzbackend.dtos;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
@@ -10,7 +11,7 @@ import javax.validation.constraints.PositiveOrZero;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ClubStatisticDto {
+public class ClubStatisticDto extends ResourceSupport {
 
     @PositiveOrZero(message = "Played matches number must be positive or zero")
     private Integer playedMatches;

@@ -14,6 +14,8 @@ import javax.persistence.Table;
 @Table(name = "club_invitations")
 public class ClubInvitation extends BaseEntity {
 
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "player_id")
     private Player player;

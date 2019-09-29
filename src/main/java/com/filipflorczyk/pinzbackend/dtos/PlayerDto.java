@@ -6,6 +6,7 @@ import com.filipflorczyk.pinzbackend.entities.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PlayerDto {
+public class PlayerDto extends ResourceSupport {
 
     @NotBlank(message = "Player first name cannot be blank")
     @Size(max = 30, message = "Maximal length of player first name is 30 letters")

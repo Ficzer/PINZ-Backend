@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Message {
+public class MessageDto {
 
     @NotBlank(message = "Message content cannot be blank")
     @Size(max = 10000, message = "Maximum size of message is 10000 letters")

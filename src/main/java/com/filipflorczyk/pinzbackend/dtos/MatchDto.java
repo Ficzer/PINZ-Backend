@@ -68,23 +68,39 @@ public class MatchDto {
     private Integer homeCorners;
 
     @PositiveOrZero(message = "Away club corners number must be positive or zero")
-    @Max(value = 100, message = "Maximum number of corners cannot be more than 100") //TODO finish it
+    @Max(value = 100, message = "Maximum number of corners cannot be more than 100")
     private Integer awayCorners;
 
+    @PositiveOrZero(message = "Home club offsides number must be positive or zero")
+    @Max(value = 100, message = "Maximum number of offsides cannot be more than 100")
     private Integer homeOffsides;
 
+    @PositiveOrZero(message = "Away club offsides number must be positive or zero")
+    @Max(value = 100, message = "Maximum number of offsides cannot be more than 100")
     private Integer awayOffsides;
 
+    @PositiveOrZero(message = "Home club yellow cards number must be positive or zero")
+    @Max(value = 100, message = "Maximum number of yellow cards cannot be more than 100")
     private Integer homeYellowCards;
 
+    @PositiveOrZero(message = "Away club yellow cards number must be positive or zero")
+    @Max(value = 100, message = "Maximum number of yellow cards cannot be more than 100")
     private Integer awayYellowCards;
 
+    @PositiveOrZero(message = "Home club red cards number must be positive or zero")
+    @Max(value = 100, message = "Maximum number of red cards cannot be more than 100")
     private Integer homeRedCards;
 
+    @PositiveOrZero(message = "Away club red cards number must be positive or zero")
+    @Max(value = 100, message = "Maximum number of red cards cannot be more than 100")
     private Integer awayRedCards;
 
+    @PositiveOrZero(message = "Home club fouls number must be positive or zero")
+    @Max(value = 1000, message = "Maximum number of fouls cannot be more than 1000")
     private Integer homeFouls;
 
+    @PositiveOrZero(message = "Away club fouls number must be positive or zero")
+    @Max(value = 1000, message = "Maximum number of fouls cannot be more than 1000")
     private Integer awayFouls;
 
     private ClubDto homeClub;

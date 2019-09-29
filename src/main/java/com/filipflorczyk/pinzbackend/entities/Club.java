@@ -27,6 +27,10 @@ public class Club extends BaseEntity {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Match> homeMatches;
 
+    @OneToMany(mappedBy = "club",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<ClubInvitation> clubInvitations;
+
     @OneToMany(mappedBy = "awayClub",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Match> awayMatches;

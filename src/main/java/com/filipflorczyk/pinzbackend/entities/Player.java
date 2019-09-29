@@ -33,7 +33,7 @@ public class Player extends BaseEntity {
     private Integer stars;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
@@ -63,4 +63,8 @@ public class Player extends BaseEntity {
     @OneToMany(mappedBy = "author",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "player",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<ClubInvitation> clubInvitations;
 }

@@ -130,7 +130,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
                 new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getStatus());
-    } //TODO Replace it with more specific handler with better formed error message, IllegalArgumentException is to basic exception
+    } //TODO Replace it with more specific handler with better formed error message, IllegalArgumentException is too basic exception
 
     @ExceptionHandler({ EntityNotFoundException.class })
     public ResponseEntity<Object> handleEntityNotFoundException(

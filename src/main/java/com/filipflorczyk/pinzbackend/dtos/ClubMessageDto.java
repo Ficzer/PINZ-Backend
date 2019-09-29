@@ -1,7 +1,5 @@
 package com.filipflorczyk.pinzbackend.dtos;
 
-import com.filipflorczyk.pinzbackend.entities.Club;
-import com.filipflorczyk.pinzbackend.entities.Player;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -66,6 +66,7 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleRepository, Use
     @Override
     public Page<UserRoleDto> findRolesOfUser(Long id, Pageable pageable) {
 
+        userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User with given id not found"));
         return repository.findByUsers_Id(id, pageable).map(this::convertToDto);
     }
 }

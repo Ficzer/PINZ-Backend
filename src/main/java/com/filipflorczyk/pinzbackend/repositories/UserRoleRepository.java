@@ -10,6 +10,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRoleRepository extends JpaRepository<UserRole, Long>, JpaSpecificationExecutor<UserRole>{
-    
-    Page<UserRole> findByUsers_Id(Long id, Pageable pageable); //TODO fix this query
+
+    @Query(value = "select * from user_roles as ur " +
+            "join users_user_roles as uur " +
+            "on ur.id = uur.user_role_id " +
+            "join users as u " +
+            "on u.id = uur.user_id " +
+            "where ur.id=uur.user_role_id and u.id = uur.user_id and u.id = ?1",
+            nativeQuery = true)
+    Page<UserRole> findByUsers_Id(Long id, Pageable pageable);
 }

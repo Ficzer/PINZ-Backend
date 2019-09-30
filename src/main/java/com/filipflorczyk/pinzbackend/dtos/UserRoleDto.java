@@ -13,6 +13,4 @@ public class UserRoleDto extends BaseDto {
 
     @NotBlank(message = "Role name cannot be blank")
     private String name;
-
-    private Set<UserRole> users;
 }

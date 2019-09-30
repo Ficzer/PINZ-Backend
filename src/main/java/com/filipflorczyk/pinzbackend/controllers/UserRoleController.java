@@ -98,11 +98,11 @@ public class UserRoleController {
     }
 
     @GetMapping(produces = { "application/json" }, path = "/users/{id}/user-roles")
-    public ResponseEntity<UserRoleDto> getRolesOfUser(@PathVariable Long id){
+    public ResponseEntity<Page<UserRoleDto>> getRolesOfUser(@PathVariable Long id, Pageable pageable){
 
-        UserRoleDto userRole = userRoleService.findRolesOfUser(id);
+        Page<UserRoleDto> userRoleDtoPage = userRoleService.findRolesOfUser(id, pageable);
 
-        return new ResponseEntity(userRole, HttpStatus.OK);
+        return new ResponseEntity(userRoleDtoPage, HttpStatus.OK);
     }
 
     @PostMapping(produces = { "application/json" }, path = "/users/{id}/user-roles")

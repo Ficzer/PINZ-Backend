@@ -8,7 +8,9 @@ import com.filipflorczyk.pinzbackend.repositories.UserRepository;
 import com.filipflorczyk.pinzbackend.repositories.UserRoleRepository;
 import com.filipflorczyk.pinzbackend.services.interfaces.UserRoleService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -62,10 +64,8 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleRepository, Use
     }
 
     @Override
-    public UserRoleDto findRolesOfUser(Long id) {
+    public Page<UserRoleDto> findRolesOfUser(Long id, Pageable pageable) {
 
-
-
-        return null;
+        return repository.findByUsers_Id(id, pageable).map(this::convertToDto);
     }
 }

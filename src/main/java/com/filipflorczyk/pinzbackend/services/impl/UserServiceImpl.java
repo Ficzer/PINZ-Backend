@@ -59,8 +59,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserRepository, User, UserD
         UserDto userDto = modelMapper.map(entity, UserDto.class);
 
         Set<UserRoleDto> userRoleDtoSet = new HashSet<>();
+        for (UserRole userRole: entity.getUserRoles()) {
+            userRoleDtoSet.add(modelMapper.map(userRole, UserRoleDto.class));
+        }
 
-        //TODO finish user role converting to dto
+        userDto.setUserRoleDto(userRoleDtoSet);
 
         return userDto;
     }

@@ -4,7 +4,6 @@ import com.filipflorczyk.pinzbackend.entities.MatchResult;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -15,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MatchDto extends ResourceSupport {
+public class MatchDto extends BaseDto {
 
     @NotNull(message = "Starting date time of match cannot be null")
     private LocalDateTime startDateTime;

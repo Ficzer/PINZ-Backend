@@ -3,7 +3,6 @@ package com.filipflorczyk.pinzbackend.dtos;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
@@ -15,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LeagueDto extends ResourceSupport {
+public class LeagueDto extends BaseDto {
 
     @NotBlank(message = "League name cannot be blank")
     @Size(max = 50, message = "Maximal length of league name is 50 letters")

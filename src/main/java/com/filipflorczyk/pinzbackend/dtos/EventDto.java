@@ -3,7 +3,6 @@ package com.filipflorczyk.pinzbackend.dtos;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class EventDto extends ResourceSupport {
+public class EventDto extends BaseDto {
 
     @Size(max = 10000, message = "Maximum size of event description is 10000 letters")
     private String description;

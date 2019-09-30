@@ -3,7 +3,6 @@ package com.filipflorczyk.pinzbackend.dtos;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
@@ -11,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CommentDto extends ResourceSupport {
+public class CommentDto extends BaseDto {
 
     @NotBlank(message = "Comment content cannot be blank")
     @Size(max = 10000, message = "Maximum size of comment is 10000 letters")

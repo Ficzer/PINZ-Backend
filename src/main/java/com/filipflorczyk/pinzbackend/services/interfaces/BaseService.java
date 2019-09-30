@@ -1,6 +1,5 @@
 package com.filipflorczyk.pinzbackend.services.interfaces;
 
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,7 +14,7 @@ public interface BaseService<TModel, UDto> {
      *
      * @return {@link(List} of all elements of given type form database
      */
-    List<TModel> findAll();
+    List<UDto> findAll();
 
     /**
      * Generic method inherited from basic service class. It gets all elements from data base
@@ -24,17 +23,17 @@ public interface BaseService<TModel, UDto> {
      * @param pageable      {@link(Pageable)} which represents information about pagination and sorting
      * @return              {@link(Page} of all elements of given type form database
      */
-    Page<TModel> findAll(Pageable pageable);
+    Page<UDto> findAll(Pageable pageable);
 
     /**
      * Generic method inherited from basic service class. It gets all elements from data base
      * and place it in page
      *
-     * @param pageable      {@link(Pageable)} which represents information about pagination and sorting
      * @param specification {@link(Specyfication)} which represents information about element's filtering
+     * @param pageable      {@link(Pageable)} which represents information about pagination and sorting
      * @return              {@link(Page} of all elements of given type form database
      */
-    Page<TModel> findAll(Specification<TModel> specification, Pageable pageable);
+    Page<UDto> findAll(Specification<TModel> specification, Pageable pageable);
 
     /**
      * Generic method inherited from basic service class. It places element passed in parameter in data base

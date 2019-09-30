@@ -37,21 +37,21 @@ public class BaseServiceImpl
     }
 
     @Override
-    public List<TModel> findAll() {
+    public List<UDto> findAll() {
         List<TModel> modelList = repository.findAll();
-        return modelList;
+        return modelList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     @Override
-    public Page<TModel> findAll(Pageable pageable) {
+    public Page<UDto> findAll(Pageable pageable) {
         Page<TModel> modelPage = repository.findAll(pageable);
-        return modelPage;
+        return modelPage.map(this::convertToDto);
     }
 
     @Override
-    public Page<TModel> findAll(Specification<TModel> specification, Pageable pageable) {
+    public Page<UDto> findAll(Specification<TModel> specification, Pageable pageable) {
         Page<TModel> modelPage = repository.findAll(specification, pageable);
-        return modelPage;
+        return modelPage.map(this::convertToDto);
     }
 
     @Override

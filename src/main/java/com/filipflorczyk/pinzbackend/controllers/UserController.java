@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/users")
 @Validated
 public class UserController {
 
@@ -37,7 +36,7 @@ public class UserController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing paged resource
      *                    in form of json+hal containing {@link(UserDto)}
      */
-    @GetMapping(produces = { "application/json" }, params = {"search"})
+    @GetMapping(produces = { "application/json" }, path = "/users", params = {"search"})
     public ResponseEntity<Page<UserDto>> getAllWithRsql(@RequestParam(value = "search", required = false) String search,
                                                                             Pageable pageable){
 
@@ -57,7 +56,7 @@ public class UserController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing paged resource
      *                    in form of json+hal containing {@link(UserDto)}
      */
-    @GetMapping(produces = { "application/json" })
+    @GetMapping(produces = { "application/json" }, path = "/users")
     public ResponseEntity<Page<UserDto>> getAll(Pageable pageable){
 
         Page<UserDto> userPage = userService.findAll(pageable);
@@ -73,7 +72,7 @@ public class UserController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing
      *                    resource with {@link(UserDto)} and self link
      */
-    @GetMapping(value = "/{id}", produces = { "application/json" })
+    @GetMapping(produces = { "application/json" }, path = "/users/{id}")
     public ResponseEntity<UserDto> getOne(@PathVariable Long id){
 
         UserDto user = userService.findById(id);
@@ -88,7 +87,7 @@ public class UserController {
      * @param  userDto    Given user
      * @return            Resource containing {@link(UserDto)} and self link
      */
-    @PostMapping(produces = { "application/json" })
+    @PostMapping(produces = { "application/json" }, path = "/users")
     public ResponseEntity<HttpStatus> addOne(@Valid @RequestBody UserDto userDto){
 
         UserDto user = userService.add(userDto);

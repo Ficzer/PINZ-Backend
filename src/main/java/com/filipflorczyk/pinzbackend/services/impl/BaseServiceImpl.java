@@ -32,10 +32,6 @@ public class BaseServiceImpl
         return new EntityNotFoundException(name + " with id " + id + " not found.");
     }
 
-    protected EntityNotFoundException entityNotFoundException(String entity, String value) {
-        return new EntityNotFoundException(entity + " with " + value + " doesn't exists.");
-    }
-
     @Override
     public List<UDto> findAll() {
         List<TModel> modelList = repository.findAll();

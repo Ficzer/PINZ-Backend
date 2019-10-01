@@ -33,11 +33,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserRepository, User, UserD
     }
 
     @Override
-    protected EntityNotFoundException entityNotFoundException(String entity, String value) {
-        return super.entityNotFoundException("User", value);
-    }
-
-    @Override
     public User convertToEntity(UserDto userDto) {
 
         User user = modelMapper.map(userDto, User.class);
@@ -46,7 +41,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserRepository, User, UserD
         if(userDto.getUserRoleDto() != null){
             userDto.getUserRoleDto().stream()
                     .forEach(userRoleDto -> {userRoles.add(userRoleRepository.findById(userRoleDto.getId())
-                            .orElseThrow(() -> new EntityNotFoundException("User role for user was not found")));});
+                            .orElseThrow(() -> super.entityNotFoundException(userRoleDto.getId(), "User role")));});
         }
         user.setUserRoles(userRoles);
 

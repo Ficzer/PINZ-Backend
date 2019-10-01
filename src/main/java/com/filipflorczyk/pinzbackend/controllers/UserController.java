@@ -88,10 +88,18 @@ public class UserController {
      * @return            Resource containing {@link(UserDto)} and self link
      */
     @PostMapping(produces = { "application/json" }, path = "/users")
-    public ResponseEntity<HttpStatus> addOne(@Valid @RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> addOne(@Valid @RequestBody UserDto userDto){
 
         UserDto user = userService.add(userDto);
 
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(user, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(produces = { "application/json" }, path = "/users")
+    public ResponseEntity<?> deleteOne(@PathVariable Long id){
+
+        userService.deleteById(id);
+
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 }

@@ -30,11 +30,6 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleRepository, Use
     }
 
     @Override
-    protected EntityNotFoundException entityNotFoundException(String entity, String value) {
-        return super.entityNotFoundException("User role", value);
-    }
-
-    @Override
     public UserRole convertToEntity(UserRoleDto userDto) {
 
         UserRole userRole = modelMapper.map(userDto, UserRole.class);
@@ -54,7 +49,7 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleRepository, Use
     public UserRoleDto addRolesToUser(Long id, BaseDto userRoleDto) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User with given id not found"));
+                .orElseThrow(() -> super.entityNotFoundException(id, "User"));
         UserRole userRole = repository.findById(userRoleDto.getId())
                 .orElseThrow(() -> entityNotFoundException(userRoleDto.getId(), "User role"));
         user.getUserRoles().add(userRole);
@@ -66,7 +61,7 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleRepository, Use
     @Override
     public Page<UserRoleDto> findRolesOfUser(Long id, Pageable pageable) {
 
-        userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User with given id not found"));
+        userRepository.findById(id).orElseThrow(() -> super.entityNotFoundException(id, "User"));
         return repository.findByUsers_Id(id, pageable).map(this::convertToDto);
     }
 }

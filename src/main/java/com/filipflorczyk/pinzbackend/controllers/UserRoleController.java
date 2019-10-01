@@ -86,7 +86,7 @@ public class UserRoleController {
 
         UserRoleDto userRole = userRoleService.add(userRoleDto);
 
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(userRole, HttpStatus.CREATED);
     }
 
     @DeleteMapping(produces = { "application/json" }, path = "/user-roles/{id}")
@@ -112,7 +112,5 @@ public class UserRoleController {
         UserRoleDto userRole = userRoleService.addRolesToUser(id, userRoleDto);
 
         return new ResponseEntity(userRole, HttpStatus.OK);
-
-        //TODO endpoints can return created object everywhere
     }
 }

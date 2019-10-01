@@ -2,6 +2,7 @@ package com.filipflorczyk.pinzbackend.exceptions;
 
 import com.filipflorczyk.pinzbackend.services.interfaces.LoggerService;
 import cz.jirutka.rsql.parser.RSQLParserException;
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
@@ -143,6 +144,21 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
         ApiError apiError =
                 new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+        return new ResponseEntity<Object>(
+                apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler({ JwtException.class })
+    public ResponseEntity<Object> handleJwtException(
+            JwtException ex, WebRequest request) {
+
+        loggerService.log(Level.SEVERE, "", ex.getMessage(), ex);
+
+        String error =
+                ex.getLocalizedMessage();
+
+        ApiError apiError =
+                new ApiError(HttpStatus.UNAUTHORIZED, ex.getLocalizedMessage(), error);
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getStatus());
     }

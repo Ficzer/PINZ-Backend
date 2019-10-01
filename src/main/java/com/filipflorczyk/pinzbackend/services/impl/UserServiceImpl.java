@@ -7,9 +7,11 @@ import com.filipflorczyk.pinzbackend.entities.User;
 import com.filipflorczyk.pinzbackend.entities.UserRole;
 import com.filipflorczyk.pinzbackend.repositories.UserRepository;
 import com.filipflorczyk.pinzbackend.repositories.UserRoleRepository;
+import com.filipflorczyk.pinzbackend.security.AuthenticationRequest;
 import com.filipflorczyk.pinzbackend.services.interfaces.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -61,5 +63,20 @@ public class UserServiceImpl extends BaseServiceImpl<UserRepository, User, UserD
         userDto.setUserRoleDto(userRoleDtoSet);
 
         return userDto;
+    }
+
+    @Override
+    public void registerUser(AuthenticationRequest registerRequest) {
+
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+        if(repository.existsByUserName(registerRequest.getUsername())){
+            throw new IllegalArgumentException("User is already registered");
+        }
+
+        User user = new User();
+        user.setUserName(registerRequest.getUsername());
+        user.setUserPassword(bCryptPasswordEncoder.encode(registerRequest.getPassword()));
+        repository.save(user);
     }
 }

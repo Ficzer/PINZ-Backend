@@ -76,9 +76,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserRepository, User, UserD
             throw new IllegalArgumentException("User is already registered");
         }
 
-        User user = new User();
-        user.setUserName(registerRequest.getUsername());
-        user.setUserPassword(bCryptPasswordEncoder.encode(registerRequest.getPassword()));
+        User user = User.builder()
+                .userName(registerRequest.getUsername())
+                .userPassword(bCryptPasswordEncoder.encode(registerRequest.getPassword()))
+                .build();
         repository.save(user);
     }
 

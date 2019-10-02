@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import cz.jirutka.rsql.parser.ast.Node;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -97,8 +98,9 @@ public class UserRoleController {
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(produces = { "application/json" }, path = "/users/{id}/user-roles")
-    public ResponseEntity<Page<UserRoleDto>> getRolesOfUser(@PathVariable Long id, Pageable pageable){
+    public ResponseEntity<?> getRolesOfUser(@PathVariable Long id, Pageable pageable){
 
         Page<UserRoleDto> userRoleDtoPage = userRoleService.findRolesOfUser(id, pageable);
 

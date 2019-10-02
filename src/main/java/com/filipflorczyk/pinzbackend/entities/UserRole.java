@@ -1,7 +1,6 @@
 package com.filipflorczyk.pinzbackend.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -10,6 +9,9 @@ import java.util.Set;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "user_roles")
 public class UserRole extends BaseEntity {

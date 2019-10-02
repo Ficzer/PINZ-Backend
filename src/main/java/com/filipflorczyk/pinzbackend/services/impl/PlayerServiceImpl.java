@@ -14,9 +14,11 @@ import com.filipflorczyk.pinzbackend.services.interfaces.PlayerService;
 import com.filipflorczyk.pinzbackend.services.interfaces.UserRoleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 
+@Service
 public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player, PlayerDto> implements PlayerService {
 
     private UserRepository userRepository;

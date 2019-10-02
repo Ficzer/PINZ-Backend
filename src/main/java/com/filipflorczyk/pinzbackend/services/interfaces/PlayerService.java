@@ -9,5 +9,9 @@ public interface PlayerService extends BaseService<Player, PlayerDto>{
 
     PlayerDto updatePlayerStats(Long id, PlayerDto playerDto);
 
-    PlayerDto addPlayerToMe(PlayerDto playerDto);
+    PlayerDto getMyPlayer();
+
+    PlayerDto addMyPlayer(PlayerDto playerDto);
+
+    PlayerDto updateMyPlayerInformation(PlayerDto playerDto);
 }

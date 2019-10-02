@@ -1,8 +1,10 @@
 package com.filipflorczyk.pinzbackend.controllers;
 
+import com.filipflorczyk.pinzbackend.dtos.PlayerDto;
 import com.filipflorczyk.pinzbackend.dtos.UserDto;
+import com.filipflorczyk.pinzbackend.entities.Player;
 import com.filipflorczyk.pinzbackend.entities.User;
-import com.filipflorczyk.pinzbackend.services.interfaces.UserService;
+import com.filipflorczyk.pinzbackend.services.interfaces.PlayerService;
 import com.filipflorczyk.pinzbackend.tools.rsql_parsers.CustomRsqlVisitor;
 import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.ast.Node;
@@ -16,18 +18,17 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController
 @Validated
-public class UserController {
+public class PlayerController {
 
-    private UserService userService;
+    private PlayerService playerService;
 
-    public UserController(UserService userService){
-        this.userService = userService;
+    public PlayerController(PlayerService playerService){
+        this.playerService = playerService;
     }
 
     /**
-     * Generates endpoint in user controller which returns all users passing RSQL filtering
+     * Generates endpoint in user controller which returns all players passing RSQL filtering
      * with attached links. This method has also enabled pagination options and generating links for
      * paged resources. Returned data are Dto's without internal information.
      *
@@ -36,19 +37,19 @@ public class UserController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing paged resource
      *                    in form of json+hal containing {@link(UserDto)}
      */
-    @GetMapping(produces = { "application/json" }, path = "/users", params = {"search"})
-    public ResponseEntity<Page<UserDto>> getAllWithRsql(@RequestParam(value = "search", required = false) String search,
-                                                                            Pageable pageable){
+    @GetMapping(produces = { "application/json" }, path = "/players", params = {"search"})
+    public ResponseEntity<?> getAllWithRsql(@RequestParam(value = "search", required = false) String search,
+                                                        Pageable pageable){
 
         Node rootNode = new RSQLParser().parse(search);
-        Specification<User> spec = rootNode.accept(new CustomRsqlVisitor<User>());
-        Page<UserDto> userPage = userService.findAll(spec, pageable);
+        Specification<Player> spec = rootNode.accept(new CustomRsqlVisitor<Player>());
+        Page<PlayerDto> playerPage = playerService.findAll(spec, pageable);
 
-        return new ResponseEntity<>(userPage, HttpStatus.OK);
+        return new ResponseEntity<>(playerPage, HttpStatus.OK);
     }
 
     /**
-     * Generates endpoint in user controller which returns all users
+     * Generates endpoint in player controller which returns all users
      * with attached links. This method has also enabled pagination options and generating links for
      * paged resources. Returned data are Dto's without internal information.
      *
@@ -56,12 +57,12 @@ public class UserController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing paged resource
      *                    in form of json+hal containing {@link(UserDto)}
      */
-    @GetMapping(produces = { "application/json" }, path = "/users")
-    public ResponseEntity<Page<UserDto>> getAll(Pageable pageable){
+    @GetMapping(produces = { "application/json" }, path = "/players")
+    public ResponseEntity<?> getAll(Pageable pageable){
 
-        Page<UserDto> userPage = userService.findAll(pageable);
+        Page<PlayerDto> playerPage = playerService.findAll(pageable);
 
-        return new ResponseEntity<>(userPage, HttpStatus.OK);
+        return new ResponseEntity<>(playerPage, HttpStatus.OK);
     }
 
     /**
@@ -72,42 +73,38 @@ public class UserController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing
      *                    resource with {@link(UserDto)} and self link
      */
-    @GetMapping(produces = { "application/json" }, path = "/users/{id}")
+    @GetMapping(produces = { "application/json" }, path = "/players/{id}")
     public ResponseEntity<UserDto> getOne(@PathVariable Long id){
 
-        UserDto user = userService.findById(id);
+        PlayerDto playerDto = playerService.findById(id);
 
-        return new ResponseEntity(user, HttpStatus.OK);
+        return new ResponseEntity(playerDto, HttpStatus.OK);
     }
 
-    /**
-     * Generates end point in user controller allows to add one validated user passed in
-     * request body in form of json.
-     *
-     * @param  userDto    Given user
-     * @return            Resource containing {@link(UserDto)} and self link
-     */
-    @PostMapping(produces = { "application/json" }, path = "/users")
-    public ResponseEntity<UserDto> addOne(@Valid @RequestBody UserDto userDto){
 
-        UserDto user = userService.add(userDto);
-
-        return new ResponseEntity(user, HttpStatus.CREATED);
-    }
-
-    @DeleteMapping(produces = { "application/json" }, path = "/users/{id}")
+    @DeleteMapping(produces = { "application/json" }, path = "/players/{id}")
     public ResponseEntity<?> deleteOne(@PathVariable Long id){
 
-        userService.deleteById(id);
+        playerService.deleteById(id);
 
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
-    @GetMapping(produces = { "application/json" }, path = "/users/me")
-    public ResponseEntity<UserDto> getMe(){
+    @GetMapping(produces = {"application/json"}, path = "/users/me/player")
+    public ResponseEntity<?> getMyPlayer(){
 
-        UserDto user = userService.getCurrentUserDto();
+        return new ResponseEntity<>(playerService.getMyPlayer(), HttpStatus.OK);
+    }
 
-        return new ResponseEntity(user, HttpStatus.OK);
+    @PostMapping(produces = {"application/json"}, path = "/users/me/player")
+    public ResponseEntity<?> addMyPlayer(@RequestBody @Valid PlayerDto playerDto){
+
+        return new ResponseEntity<>(playerService.addMyPlayer(playerDto), HttpStatus.OK);
+    }
+
+    @PutMapping(produces = {"application/json"}, path = "/users/me/player")
+    public ResponseEntity<?> updateMyPlayer(@RequestBody @Valid PlayerDto playerDto){
+
+        return new ResponseEntity<>(playerService.updateMyPlayerInformation(playerDto), HttpStatus.OK);
     }
 }

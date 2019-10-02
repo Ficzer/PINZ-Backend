@@ -8,9 +8,11 @@ import com.filipflorczyk.pinzbackend.entities.UserRole;
 import com.filipflorczyk.pinzbackend.repositories.UserRepository;
 import com.filipflorczyk.pinzbackend.repositories.UserRoleRepository;
 import com.filipflorczyk.pinzbackend.security.AuthenticationRequest;
+import com.filipflorczyk.pinzbackend.security.UserPrincipal;
 import com.filipflorczyk.pinzbackend.services.interfaces.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -78,5 +80,22 @@ public class UserServiceImpl extends BaseServiceImpl<UserRepository, User, UserD
         user.setUserName(registerRequest.getUsername());
         user.setUserPassword(bCryptPasswordEncoder.encode(registerRequest.getPassword()));
         repository.save(user);
+    }
+
+    @Override
+    public UserDto getCurrentUserDto() {
+        return convertToDto(getCurrentUser());
+    }
+
+    private User getCurrentUser() {
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
+        String username = "";
+
+        if(userDetails instanceof UserPrincipal){
+            username = ((UserPrincipal) userDetails).getUsername();
+        }
+
+        return repository.findByUserName(username)
+                .orElseThrow(() -> new EntityNotFoundException("User with given username not found"));
     }
 }

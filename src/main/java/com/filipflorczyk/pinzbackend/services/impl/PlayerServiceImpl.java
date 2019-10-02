@@ -3,13 +3,17 @@ package com.filipflorczyk.pinzbackend.services.impl;
 import com.filipflorczyk.pinzbackend.dtos.PlayerDto;
 import com.filipflorczyk.pinzbackend.dtos.UserRoleDto;
 import com.filipflorczyk.pinzbackend.entities.Player;
+import com.filipflorczyk.pinzbackend.entities.User;
 import com.filipflorczyk.pinzbackend.entities.UserRole;
 import com.filipflorczyk.pinzbackend.repositories.PlayerRepository;
 import com.filipflorczyk.pinzbackend.repositories.UserRepository;
 import com.filipflorczyk.pinzbackend.repositories.UserRoleRepository;
+import com.filipflorczyk.pinzbackend.security.UserDetailsServiceImpl;
+import com.filipflorczyk.pinzbackend.security.UserPrincipal;
 import com.filipflorczyk.pinzbackend.services.interfaces.PlayerService;
 import com.filipflorczyk.pinzbackend.services.interfaces.UserRoleService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -54,8 +58,73 @@ public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player,
     }
 
     @Override
-    public PlayerDto addPlayerToMe(PlayerDto playerDto) {
+    public PlayerDto getMyPlayer() {
 
-        return null;
+        User user = getCurrentUser();
+
+        if (user.getPlayer() == null)
+            throw new EntityNotFoundException("Player for current logged user not found");
+
+        return convertToDto(user.getPlayer());
+    }
+
+    @Override
+    public PlayerDto addMyPlayer(PlayerDto playerDto) {
+
+        User user = getCurrentUser();
+
+        if (user.getPlayer() != null)
+            throw new IllegalArgumentException("User has already added his player");
+
+        Player player = new Player();
+        player.setGoals(0);
+        player.setAppearances(0);
+        player.setBirthDate(playerDto.getBirthDate());
+        player.setFieldPosition(playerDto.getFieldPosition());
+        player.setFirstName(playerDto.getFirstName());
+        player.setLastName(playerDto.getLastName());
+        player.setHeight(playerDto.getHeight());
+        player.setPseudonym(player.getPseudonym());
+        player.setStars(0);
+
+        user.setPlayer(player);
+        repository.save(player);
+        userRepository.save(user);
+
+        return playerDto;
+    }
+
+    @Override
+    public PlayerDto updateMyPlayerInformation(PlayerDto playerDto) {
+
+        User user = getCurrentUser();
+
+        if (user.getPlayer() == null)
+            throw new EntityNotFoundException("Player for current logged user not found");
+
+        Player myPlayer = user.getPlayer();
+
+        myPlayer.setFirstName(playerDto.getFirstName());
+        myPlayer.setLastName(playerDto.getLastName());
+        myPlayer.setPseudonym(playerDto.getPseudonym());
+        myPlayer.setHeight(playerDto.getHeight());
+        myPlayer.setBirthDate(playerDto.getBirthDate());
+        myPlayer.setFieldPosition(playerDto.getFieldPosition());
+
+        repository.save(myPlayer);
+
+        return convertToDto(myPlayer);
+    }
+
+    private User getCurrentUser() {
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
+        String username = "";
+
+        if(userDetails instanceof UserPrincipal){
+            username = ((UserPrincipal) userDetails).getUsername();
+        }
+
+        return userRepository.findByUserName(username)
+                .orElseThrow(() -> new EntityNotFoundException("User with given username not found"));
     }
 }

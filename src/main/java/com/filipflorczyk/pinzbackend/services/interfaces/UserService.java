@@ -7,4 +7,6 @@ import com.filipflorczyk.pinzbackend.security.AuthenticationRequest;
 public interface UserService extends BaseService<User, UserDto> {
 
     void registerUser(AuthenticationRequest registerRequest);
+
+    UserDto getCurrentUserDto();
 }

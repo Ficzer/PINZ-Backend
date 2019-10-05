@@ -38,6 +38,7 @@ public class UserRoleController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing paged resource
      *                    in form of json+hal containing {@link(UserDto)}
      */
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(produces = { "application/json" }, path = "/user-roles", params = {"search"})
     public ResponseEntity<Page<UserRoleDto>> getAllWithRsql(@RequestParam(value = "search", required = false) String search,
                                                             Pageable pageable){
@@ -58,6 +59,7 @@ public class UserRoleController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing paged resource
      *                    in form of json+hal containing {@link(UserDto)}
      */
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(produces = { "application/json" }, path = "/user-roles")
     public ResponseEntity<Page<UserRoleDto>> getAll(Pageable pageable){
 
@@ -74,6 +76,7 @@ public class UserRoleController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing
      *                    resource with {@link(UserDto)} and self link
      */
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(produces = { "application/json" }, path = "/user-roles/{id}")
     public ResponseEntity<UserRoleDto> getOne(@PathVariable Long id){
 
@@ -82,6 +85,7 @@ public class UserRoleController {
         return new ResponseEntity(userRole, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(produces = { "application/json" }, path = "/user-roles")
     public ResponseEntity<UserRoleDto> addOne(@RequestBody @Valid UserRoleDto userRoleDto){
 
@@ -90,6 +94,7 @@ public class UserRoleController {
         return new ResponseEntity(userRole, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping(produces = { "application/json" }, path = "/user-roles/{id}")
     public ResponseEntity<UserRoleDto> deleteOne(@PathVariable Long id){
 
@@ -107,6 +112,7 @@ public class UserRoleController {
         return new ResponseEntity(userRoleDtoPage, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(produces = { "application/json" }, path = "/users/{id}/user-roles")
     public ResponseEntity<UserRoleDto> addRoleToUser(@PathVariable Long id,
                                                      @RequestBody @Valid BaseDto userRoleDto){

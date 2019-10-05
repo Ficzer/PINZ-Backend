@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,7 @@ public class PlayerController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing paged resource
      *                    in form of json+hal containing {@link(UserDto)}
      */
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     @GetMapping(produces = { "application/json" }, path = "/players", params = {"search"})
     public ResponseEntity<?> getAllWithRsql(@RequestParam(value = "search", required = false) String search,
                                                         Pageable pageable){
@@ -58,6 +60,7 @@ public class PlayerController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing paged resource
      *                    in form of json+hal containing {@link(UserDto)}
      */
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     @GetMapping(produces = { "application/json" }, path = "/players")
     public ResponseEntity<?> getAll(Pageable pageable){
 
@@ -74,6 +77,7 @@ public class PlayerController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing
      *                    resource with {@link(UserDto)} and self link
      */
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     @GetMapping(produces = { "application/json" }, path = "/players/{id}")
     public ResponseEntity<UserDto> getOne(@PathVariable Long id){
 
@@ -82,7 +86,7 @@ public class PlayerController {
         return new ResponseEntity(playerDto, HttpStatus.OK);
     }
 
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping(produces = { "application/json" }, path = "/players/{id}")
     public ResponseEntity<?> deleteOne(@PathVariable Long id){
 
@@ -91,18 +95,21 @@ public class PlayerController {
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     @GetMapping(produces = {"application/json"}, path = "/users/me/player")
     public ResponseEntity<?> getMyPlayer(){
 
         return new ResponseEntity<>(playerService.getMyPlayer(), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     @PostMapping(produces = {"application/json"}, path = "/users/me/player")
     public ResponseEntity<?> addMyPlayer(@RequestBody @Valid PlayerDto playerDto){
 
         return new ResponseEntity<>(playerService.addMyPlayer(playerDto), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     @PutMapping(produces = {"application/json"}, path = "/users/me/player")
     public ResponseEntity<?> updateMyPlayer(@RequestBody @Valid PlayerDto playerDto){
 

@@ -30,16 +30,19 @@ public class DataLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        UserRole userRole = UserRole.builder().name("ADMIN").build();
+        UserRole userRole1 = UserRole.builder().name("ADMIN").build();
+        UserRole userRole2 = UserRole.builder().name("USER").build();
+
         Set<UserRole> userRoleSet = new HashSet<>();
-        userRoleSet.add(userRole);
+        userRoleSet.add(userRole1);
         User user = User.builder()
                 .userName("admin")
                 .userPassword(bCryptPasswordEncoder.encode("admin"))
                 .userRoles(userRoleSet)
                 .build();
 
-        userRoleRepository.save(userRole);
+        userRoleRepository.save(userRole1);
+        userRoleRepository.save(userRole2);
         userRepository.save(user);
     }
 }

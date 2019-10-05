@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,7 @@ public class UserController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing paged resource
      *                    in form of json+hal containing {@link(UserDto)}
      */
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(produces = { "application/json" }, path = "/users", params = {"search"})
     public ResponseEntity<Page<UserDto>> getAllWithRsql(@RequestParam(value = "search", required = false) String search,
                                                                             Pageable pageable){
@@ -56,6 +58,7 @@ public class UserController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing paged resource
      *                    in form of json+hal containing {@link(UserDto)}
      */
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(produces = { "application/json" }, path = "/users")
     public ResponseEntity<Page<UserDto>> getAll(Pageable pageable){
 
@@ -72,6 +75,7 @@ public class UserController {
      * @return            {@linkResponseEntity} with HTTP Ok status and body containing
      *                    resource with {@link(UserDto)} and self link
      */
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(produces = { "application/json" }, path = "/users/{id}")
     public ResponseEntity<UserDto> getOne(@PathVariable Long id){
 
@@ -87,6 +91,7 @@ public class UserController {
      * @param  userDto    Given user
      * @return            Resource containing {@link(UserDto)} and self link
      */
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(produces = { "application/json" }, path = "/users")
     public ResponseEntity<UserDto> addOne(@Valid @RequestBody UserDto userDto){
 
@@ -95,6 +100,7 @@ public class UserController {
         return new ResponseEntity(user, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping(produces = { "application/json" }, path = "/users/{id}")
     public ResponseEntity<?> deleteOne(@PathVariable Long id){
 
@@ -103,6 +109,7 @@ public class UserController {
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     @GetMapping(produces = { "application/json" }, path = "/users/me")
     public ResponseEntity<UserDto> getMe(){
 

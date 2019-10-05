@@ -76,9 +76,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserRepository, User, UserD
             throw new IllegalArgumentException("User is already registered");
         }
 
+        Set<UserRole> userRoles = new HashSet<>();
+        userRoles.add(userRoleRepository.findByName("USER")
+                .orElseThrow(() -> new EntityNotFoundException("User role with given name does not exist")));
+
         User user = User.builder()
                 .userName(registerRequest.getUsername())
                 .userPassword(bCryptPasswordEncoder.encode(registerRequest.getPassword()))
+                .userRoles(userRoles)
                 .build();
         repository.save(user);
     }

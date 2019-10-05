@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRoleRepository extends JpaRepository<UserRole, Long>, JpaSpecificationExecutor<UserRole>{
 
@@ -19,4 +21,6 @@ public interface UserRoleRepository extends JpaRepository<UserRole, Long>, JpaSp
             "where ur.id=uur.user_role_id and u.id = uur.user_id and u.id = ?1",
             nativeQuery = true)
     Page<UserRole> findByUsers_Id(Long id, Pageable pageable);
+
+    Optional<UserRole> findByName(String name);
 }

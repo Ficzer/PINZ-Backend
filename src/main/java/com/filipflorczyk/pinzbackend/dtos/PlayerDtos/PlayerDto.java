@@ -1,7 +1,7 @@
 package com.filipflorczyk.pinzbackend.dtos.PlayerDtos;
 
 import com.filipflorczyk.pinzbackend.dtos.BaseDto;
-import com.filipflorczyk.pinzbackend.dtos.ClubDto;
+import com.filipflorczyk.pinzbackend.dtos.ClubDtos.ClubDto;
 import com.filipflorczyk.pinzbackend.dtos.UserDto;
 import com.filipflorczyk.pinzbackend.entities.FieldPosition;
 import lombok.Getter;
@@ -50,6 +50,8 @@ public class PlayerDto extends BaseDto {
 
     @PositiveOrZero(message = "Player stars must be positive or zero")
     private Integer stars;
+
+    private boolean isTrainer;
 
     private UserDto user;
 

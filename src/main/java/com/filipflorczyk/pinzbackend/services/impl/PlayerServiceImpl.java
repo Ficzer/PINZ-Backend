@@ -1,15 +1,19 @@
 package com.filipflorczyk.pinzbackend.services.impl;
 
+import com.filipflorczyk.pinzbackend.dtos.BooleanDto;
 import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerDto;
 import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerInfoDto;
 import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerStatsDto;
 import com.filipflorczyk.pinzbackend.entities.Player;
 import com.filipflorczyk.pinzbackend.entities.User;
+import com.filipflorczyk.pinzbackend.repositories.ClubRepository;
 import com.filipflorczyk.pinzbackend.repositories.PlayerRepository;
 import com.filipflorczyk.pinzbackend.repositories.UserRepository;
 import com.filipflorczyk.pinzbackend.security.UserPrincipal;
 import com.filipflorczyk.pinzbackend.services.interfaces.PlayerService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +23,12 @@ import javax.persistence.EntityNotFoundException;
 public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player, PlayerDto> implements PlayerService {
 
     private UserRepository userRepository;
+    private ClubRepository clubRepository;
 
-    public PlayerServiceImpl(PlayerRepository repository, UserRepository userRepository, ModelMapper modelMapper) {
+    public PlayerServiceImpl(PlayerRepository repository, UserRepository userRepository, ClubRepository clubRepository, ModelMapper modelMapper) {
         super(repository, modelMapper);
         this.userRepository = userRepository;
+        this.clubRepository = clubRepository;
     }
 
     @Override
@@ -124,6 +130,39 @@ public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player,
         player.setAppearances(playerStatsDto.getAppearances());
         player.setGoals(playerStatsDto.getGoals());
         player.setStars(playerStatsDto.getStars());
+
+        return convertToDto(repository.save(player));
+    }
+
+    @Override
+    public Page<PlayerDto> getPlayersOfGivenClub(Long id, Pageable pageable) {
+
+        if(clubRepository.existsById(id)){
+            throw new EntityNotFoundException("Club with given id does not exist");
+        }
+
+        return repository.findByClub_Id(id, pageable).map(this::convertToDto);
+    }
+
+    @Override
+    public Page<PlayerDto> getPlayersOfMyClub(Pageable pageable) {
+        User user = getCurrentUser();
+
+        if (user.getPlayer() == null)
+            throw new EntityNotFoundException("Player for current logged user not found");
+
+        if (user.getPlayer().getOwnedClub() == null)
+            throw new EntityNotFoundException("Player is not a trainer of any club");
+
+        return repository.findByClub_Id(user.getPlayer().getOwnedClub().getId(), pageable).map(this::convertToDto);
+    }
+
+    @Override
+    public PlayerDto makePlayerTrainer(Long id, BooleanDto booleanDto) {
+
+        Player player = repository.findById(id).orElseThrow(() -> entityNotFoundException(id, "name"));
+
+        player.setTrainer(booleanDto.isValue());
 
         return convertToDto(repository.save(player));
     }

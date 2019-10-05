@@ -1,5 +1,6 @@
 package com.filipflorczyk.pinzbackend.dtos;
 
+import com.filipflorczyk.pinzbackend.dtos.ClubDtos.ClubDto;
 import com.filipflorczyk.pinzbackend.entities.MatchResult;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

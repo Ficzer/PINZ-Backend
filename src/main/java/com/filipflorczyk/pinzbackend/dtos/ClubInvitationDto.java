@@ -1,5 +1,6 @@
 package com.filipflorczyk.pinzbackend.dtos;
 
+import com.filipflorczyk.pinzbackend.dtos.ClubDtos.ClubDto;
 import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerDto;
 
 import javax.validation.constraints.NotBlank;

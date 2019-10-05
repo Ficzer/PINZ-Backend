@@ -1,9 +1,9 @@
 package com.filipflorczyk.pinzbackend.services.interfaces;
 
-import com.filipflorczyk.pinzbackend.dtos.PlayerDto;
-import com.filipflorczyk.pinzbackend.dtos.UserRoleDto;
+import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerDto;
+import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerInfoDto;
+import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerStatsDto;
 import com.filipflorczyk.pinzbackend.entities.Player;
-import com.filipflorczyk.pinzbackend.entities.UserRole;
 
 public interface PlayerService extends BaseService<Player, PlayerDto>{
 
@@ -13,5 +13,7 @@ public interface PlayerService extends BaseService<Player, PlayerDto>{
 
     PlayerDto addMyPlayer(PlayerDto playerDto);
 
-    PlayerDto updateMyPlayerInformation(PlayerDto playerDto);
+    PlayerDto updateMyPlayerInformation(PlayerInfoDto playerDto);
+
+    PlayerDto updatePlayerStats(Long id, PlayerStatsDto playerStatsDto);
 }

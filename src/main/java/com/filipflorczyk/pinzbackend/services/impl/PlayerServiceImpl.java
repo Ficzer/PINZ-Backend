@@ -1,17 +1,14 @@
 package com.filipflorczyk.pinzbackend.services.impl;
 
-import com.filipflorczyk.pinzbackend.dtos.PlayerDto;
-import com.filipflorczyk.pinzbackend.dtos.UserRoleDto;
+import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerDto;
+import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerInfoDto;
+import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerStatsDto;
 import com.filipflorczyk.pinzbackend.entities.Player;
 import com.filipflorczyk.pinzbackend.entities.User;
-import com.filipflorczyk.pinzbackend.entities.UserRole;
 import com.filipflorczyk.pinzbackend.repositories.PlayerRepository;
 import com.filipflorczyk.pinzbackend.repositories.UserRepository;
-import com.filipflorczyk.pinzbackend.repositories.UserRoleRepository;
-import com.filipflorczyk.pinzbackend.security.UserDetailsServiceImpl;
 import com.filipflorczyk.pinzbackend.security.UserPrincipal;
 import com.filipflorczyk.pinzbackend.services.interfaces.PlayerService;
-import com.filipflorczyk.pinzbackend.services.interfaces.UserRoleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -97,7 +94,7 @@ public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player,
     }
 
     @Override
-    public PlayerDto updateMyPlayerInformation(PlayerDto playerDto) {
+    public PlayerDto updateMyPlayerInformation(PlayerInfoDto playerDto) {
 
         User user = getCurrentUser();
 
@@ -116,6 +113,19 @@ public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player,
         repository.save(myPlayer);
 
         return convertToDto(myPlayer);
+    }
+
+    @Override
+    public PlayerDto updatePlayerStats(Long id, PlayerStatsDto playerStatsDto) {
+
+        Player player = repository.findById(id)
+                .orElseThrow(() -> entityNotFoundException(id, "name"));
+
+        player.setAppearances(playerStatsDto.getAppearances());
+        player.setGoals(playerStatsDto.getGoals());
+        player.setStars(playerStatsDto.getStars());
+
+        return convertToDto(repository.save(player));
     }
 
     private User getCurrentUser() {

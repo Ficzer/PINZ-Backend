@@ -1,6 +1,6 @@
 package com.filipflorczyk.pinzbackend.dtos;
 
-import com.filipflorczyk.pinzbackend.entities.BaseEntity;
+import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

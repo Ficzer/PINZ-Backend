@@ -1,5 +1,8 @@
-package com.filipflorczyk.pinzbackend.dtos;
+package com.filipflorczyk.pinzbackend.dtos.PlayerDtos;
 
+import com.filipflorczyk.pinzbackend.dtos.BaseDto;
+import com.filipflorczyk.pinzbackend.dtos.ClubDto;
+import com.filipflorczyk.pinzbackend.dtos.UserDto;
 import com.filipflorczyk.pinzbackend.entities.FieldPosition;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

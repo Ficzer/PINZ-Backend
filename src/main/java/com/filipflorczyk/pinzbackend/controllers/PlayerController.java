@@ -1,9 +1,10 @@
 package com.filipflorczyk.pinzbackend.controllers;
 
-import com.filipflorczyk.pinzbackend.dtos.PlayerDto;
+import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerDto;
+import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerInfoDto;
+import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerStatsDto;
 import com.filipflorczyk.pinzbackend.dtos.UserDto;
 import com.filipflorczyk.pinzbackend.entities.Player;
-import com.filipflorczyk.pinzbackend.entities.User;
 import com.filipflorczyk.pinzbackend.services.interfaces.PlayerService;
 import com.filipflorczyk.pinzbackend.tools.rsql_parsers.CustomRsqlVisitor;
 import cz.jirutka.rsql.parser.RSQLParser;
@@ -111,8 +112,15 @@ public class PlayerController {
 
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     @PutMapping(produces = {"application/json"}, path = "/users/me/player")
-    public ResponseEntity<?> updateMyPlayer(@RequestBody @Valid PlayerDto playerDto){
+    public ResponseEntity<?> updateMyPlayer(@RequestBody @Valid PlayerInfoDto playerDto){
 
         return new ResponseEntity<>(playerService.updateMyPlayerInformation(playerDto), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('SUPERVISOR')")
+    @PutMapping(produces = {"application/json"}, path = "/users/me/player/{id}")
+    public ResponseEntity<?> updatePlayerStats(@PathVariable Long id, @RequestBody @Valid PlayerStatsDto playerDto){
+
+        return new ResponseEntity<>(playerService.updatePlayerStats(id, playerDto), HttpStatus.OK);
     }
 }

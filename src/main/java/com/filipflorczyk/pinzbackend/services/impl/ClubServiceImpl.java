@@ -66,8 +66,13 @@ public class ClubServiceImpl extends BaseServiceImpl<ClubRepository, Club, ClubD
         }
 
         Club club = Club.builder().name(newClubDto.getName()).trainer(player).build();
+        player.setOwnedClub(club);
+        player.setClub(club);
 
-        return convertToDto(repository.save(club));
+        Club returnClub = repository.save(club);
+        playerRepository.save(player);
+
+        return convertToDto(returnClub);
     }
 
     @Override
@@ -120,7 +125,7 @@ public class ClubServiceImpl extends BaseServiceImpl<ClubRepository, Club, ClubD
     }
 
     private User getCurrentUser() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = "";
 
         if(userDetails instanceof UserPrincipal){

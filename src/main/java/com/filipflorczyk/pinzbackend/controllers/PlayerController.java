@@ -116,9 +116,9 @@ public class PlayerController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERVISOR', 'USER')")
     @PostMapping(produces = {"application/json"}, path = "/users/me/player")
-    public ResponseEntity<?> addMyPlayer(@RequestBody @Valid PlayerDto playerDto){
+    public ResponseEntity<?> addMyPlayer(@RequestBody @Valid PlayerInfoDto playerInfoDto){
 
-        return new ResponseEntity<>(playerService.addMyPlayer(playerDto), HttpStatus.OK);
+        return new ResponseEntity<>(playerService.addMyPlayer(playerInfoDto), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERVISOR', 'USER')")

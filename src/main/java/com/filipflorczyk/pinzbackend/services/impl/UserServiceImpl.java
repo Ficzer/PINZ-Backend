@@ -94,7 +94,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserRepository, User, UserD
     }
 
     private User getCurrentUser() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = "";
 
         if(userDetails instanceof UserPrincipal){

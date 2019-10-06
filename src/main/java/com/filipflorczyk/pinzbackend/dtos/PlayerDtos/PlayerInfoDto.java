@@ -1,5 +1,6 @@
 package com.filipflorczyk.pinzbackend.dtos.PlayerDtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.filipflorczyk.pinzbackend.entities.FieldPosition;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ public class PlayerInfoDto {
     private String pseudonym;
 
     @Past(message = "Player birth date must be past")
+    @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
     private LocalDateTime birthDate;
 
     @PositiveOrZero(message = "Player height must be positive or zero")

@@ -74,7 +74,7 @@ public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player,
     }
 
     @Override
-    public PlayerDto addMyPlayer(PlayerDto playerDto) {
+    public PlayerDto addMyPlayer(PlayerInfoDto playerDto) {
 
         User user = getCurrentUser();
 
@@ -93,10 +93,11 @@ public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player,
         player.setStars(0);
 
         user.setPlayer(player);
-        repository.save(player);
+        player.setUser(user);
+        Player returnPlayer = repository.save(player);
         userRepository.save(user);
 
-        return playerDto;
+        return convertToDto(returnPlayer);
     }
 
     @Override
@@ -168,10 +169,11 @@ public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player,
     }
 
     private User getCurrentUser() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = "";
 
         if(userDetails instanceof UserPrincipal){
+            UserPrincipal userPrincipal = ((UserPrincipal) userDetails);
             username = ((UserPrincipal) userDetails).getUsername();
         }
 

@@ -1,5 +1,6 @@
 package com.filipflorczyk.pinzbackend.dtos.PlayerDtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.filipflorczyk.pinzbackend.dtos.BaseDto;
 import com.filipflorczyk.pinzbackend.dtos.ClubDtos.ClubDto;
 import com.filipflorczyk.pinzbackend.dtos.UserDto;
@@ -34,6 +35,7 @@ public class PlayerDto extends BaseDto {
     private String pseudonym;
 
     @Past(message = "Player birth date must be past")
+    @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDateTime birthDate;
 
     @PositiveOrZero(message = "Player height must be positive or zero")

@@ -90,7 +90,6 @@ public class PostServiceImpl extends BaseServiceImpl<PostRepository, Post, PostD
                 .stars(0)
                 .build();
 
-
         return convertToDto(repository.save(post));
     }
 

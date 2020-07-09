@@ -67,6 +67,9 @@ public class Player extends BaseEntity {
     @ManyToMany
     private List<Post> staredPosts;
 
+    @ManyToMany
+    private List<Comment> staredComments;
+
     @OneToMany(mappedBy = "author",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Comment> comments;

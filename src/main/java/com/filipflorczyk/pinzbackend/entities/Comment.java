@@ -1,16 +1,16 @@
 package com.filipflorczyk.pinzbackend.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "comments")
 public class Comment extends BaseEntity {
@@ -20,6 +20,9 @@ public class Comment extends BaseEntity {
     private LocalDateTime creationDateTime;
 
     private Integer stars;
+
+    @ManyToMany
+    private List<Player> playersWhoGiveStar;
 
     @ManyToOne
     @JoinColumn(name = "post_id")

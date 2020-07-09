@@ -27,9 +27,9 @@ public class PostController {
     @GetMapping(produces = { "application/json" }, path = "/posts")
     public ResponseEntity<?> getAll(Pageable pageable){
 
-        Page<PostDto> clubInvitationDtoPage = postService.findAll(pageable);
+        Page<PostDto> postDtoPage = postService.findAll(pageable);
 
-        return new ResponseEntity<>(clubInvitationDtoPage, HttpStatus.OK);
+        return new ResponseEntity<>(postDtoPage, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERVISOR')")

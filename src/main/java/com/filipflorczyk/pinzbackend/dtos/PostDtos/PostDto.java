@@ -3,7 +3,7 @@ package com.filipflorczyk.pinzbackend.dtos.PostDtos;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.filipflorczyk.pinzbackend.dtos.BaseDto;
 import com.filipflorczyk.pinzbackend.dtos.ClubDtos.ClubDto;
-import com.filipflorczyk.pinzbackend.dtos.CommentDto;
+import com.filipflorczyk.pinzbackend.dtos.CommentDtos.CommentDto;
 import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

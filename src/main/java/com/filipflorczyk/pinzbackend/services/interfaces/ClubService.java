@@ -7,7 +7,7 @@ import com.filipflorczyk.pinzbackend.entities.Club;
 
 public interface ClubService extends BaseService<Club, ClubDto> {
 
-    ClubDto addNewClub(NewClubDto newClubDto);
+    void addNewClub(NewClubDto newClubDto);
 
     ClubDto getMyClub();
 

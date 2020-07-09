@@ -1,6 +1,8 @@
 package com.filipflorczyk.pinzbackend.dtos.PlayerDtos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.filipflorczyk.pinzbackend.dtos.BaseDto;
 import com.filipflorczyk.pinzbackend.dtos.ClubDtos.ClubDto;
 import com.filipflorczyk.pinzbackend.dtos.UserDto;
@@ -57,5 +59,6 @@ public class PlayerDto extends BaseDto {
 
     private UserDto user;
 
+    @JsonIgnore
     private ClubDto club;
 }

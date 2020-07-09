@@ -19,7 +19,7 @@ public class User extends BaseEntity {
 
     private String userPassword;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Player player;
 
     @ManyToMany(fetch = FetchType.EAGER)

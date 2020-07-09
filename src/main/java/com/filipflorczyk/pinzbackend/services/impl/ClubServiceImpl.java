@@ -52,7 +52,7 @@ public class ClubServiceImpl extends BaseServiceImpl<ClubRepository, Club, ClubD
     }
 
     @Override
-    public ClubDto addNewClub(NewClubDto newClubDto) {
+    public void addNewClub(NewClubDto newClubDto) {
 
         if(repository.existsByName(newClubDto.getName())){
             throw new IllegalArgumentException("Club with given name already exist");
@@ -62,17 +62,16 @@ public class ClubServiceImpl extends BaseServiceImpl<ClubRepository, Club, ClubD
                 .orElseThrow(() -> new EntityNotFoundException("Player with given id not found"));
 
         if(!player.isTrainer()){
-            throw new IllegalArgumentException("Player is set as not a trainer");
+            throw new IllegalArgumentException("Player is not set as a trainer");
         }
 
         Club club = Club.builder().name(newClubDto.getName()).trainer(player).build();
         player.setOwnedClub(club);
         player.setClub(club);
 
-        Club returnClub = repository.save(club);
-        playerRepository.save(player);
+        ClubDto clubDto = convertToDto(repository.save(club));
 
-        return convertToDto(returnClub);
+        playerRepository.save(player);
     }
 
     @Override

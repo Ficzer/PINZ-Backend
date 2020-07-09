@@ -17,4 +17,10 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
     protected Long id;
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return true;
+    }
 }

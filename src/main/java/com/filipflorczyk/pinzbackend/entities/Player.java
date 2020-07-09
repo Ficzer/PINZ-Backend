@@ -71,4 +71,18 @@ public class Player extends BaseEntity {
     @OneToMany(mappedBy = "player",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ClubInvitation> clubInvitations;
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null){
+            return false;
+        }
+
+        if(obj instanceof Player){
+            Player player = (Player) obj;
+            return player.id.equals(this.id);
+        }
+
+        return false;
+    }
 }

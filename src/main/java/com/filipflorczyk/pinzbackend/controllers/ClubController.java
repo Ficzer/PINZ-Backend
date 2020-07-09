@@ -87,7 +87,9 @@ public class ClubController {
     @PostMapping(produces = { "application/json" }, path = "/clubs")
     public ResponseEntity<?> addNewClub(@RequestBody NewClubDto newClubDto){
 
-        return new ResponseEntity(clubService.addNewClub(newClubDto), HttpStatus.ACCEPTED);
+        clubService.addNewClub(newClubDto);
+
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERVISOR')")

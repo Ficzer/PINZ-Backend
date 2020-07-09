@@ -1,11 +1,18 @@
-package com.filipflorczyk.pinzbackend.dtos;
+package com.filipflorczyk.pinzbackend.dtos.ClubInvitationsDtos;
 
+import com.filipflorczyk.pinzbackend.dtos.BaseDto;
 import com.filipflorczyk.pinzbackend.dtos.ClubDtos.ClubDto;
 import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerDto;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class ClubInvitationDto extends BaseDto {
 
     @NotBlank(message = "Invitation description content cannot be blank")

@@ -1,7 +1,6 @@
 package com.filipflorczyk.pinzbackend.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +9,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "posts")
 public class Post extends BaseEntity {
 
@@ -18,6 +20,9 @@ public class Post extends BaseEntity {
     private LocalDateTime creationDateTime;
 
     private Integer stars;
+
+    @ManyToMany
+    private List<Player> playersWhoGiveStar;
 
     @ManyToOne
     @JoinColumn(name = "club_id")

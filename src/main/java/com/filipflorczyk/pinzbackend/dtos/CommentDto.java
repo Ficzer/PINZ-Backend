@@ -1,6 +1,8 @@
 package com.filipflorczyk.pinzbackend.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerDto;
+import com.filipflorczyk.pinzbackend.dtos.PostDtos.PostDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +25,7 @@ public class CommentDto extends BaseDto {
     @PositiveOrZero(message = "Stars number in comment must be positive or zero")
     private Integer stars;
 
+    @JsonIgnore
     @NotNull(message = "Post in comment cannot be null")
     private PostDto post;
 

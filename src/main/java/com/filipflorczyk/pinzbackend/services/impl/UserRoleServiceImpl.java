@@ -46,7 +46,7 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleRepository, Use
     }
 
     @Override
-    public UserRoleDto addRolesToUser(Long id, BaseDto userRoleDto) {
+    public void addRolesToUser(Long id, BaseDto userRoleDto) {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> super.entityNotFoundException(id, "User"));
@@ -54,8 +54,6 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleRepository, Use
                 .orElseThrow(() -> entityNotFoundException(userRoleDto.getId(), "User role"));
         user.getUserRoles().add(userRole);
         userRepository.save(user);
-
-        return convertToDto(userRole);
     }
 
     @Override

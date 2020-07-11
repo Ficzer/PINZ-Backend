@@ -4,6 +4,7 @@ import com.filipflorczyk.pinzbackend.dtos.IdentificationDto;
 import com.filipflorczyk.pinzbackend.dtos.PostDtos.NewPostDto;
 import com.filipflorczyk.pinzbackend.dtos.PostDtos.PostDto;
 import com.filipflorczyk.pinzbackend.entities.*;
+import com.filipflorczyk.pinzbackend.repositories.ClubRepository;
 import com.filipflorczyk.pinzbackend.repositories.PlayerRepository;
 import com.filipflorczyk.pinzbackend.repositories.PostRepository;
 import com.filipflorczyk.pinzbackend.repositories.UserRepository;
@@ -23,11 +24,15 @@ public class PostServiceImpl extends BaseServiceImpl<PostRepository, Post, PostD
 
     UserRepository userRepository;
     PlayerRepository playerRepository;
+    ClubRepository clubRepository;
 
-    public PostServiceImpl(PostRepository repository, UserRepository userRepository, PlayerRepository playerRepository, ModelMapper modelMapper) {
+    public PostServiceImpl(PostRepository repository, UserRepository userRepository,
+                           PlayerRepository playerRepository,
+                           ClubRepository clubRepository, ModelMapper modelMapper) {
         super(repository, modelMapper);
         this.userRepository = userRepository;
         this.playerRepository = playerRepository;
+        this.clubRepository = clubRepository;
     }
 
     @Override
@@ -63,11 +68,11 @@ public class PostServiceImpl extends BaseServiceImpl<PostRepository, Post, PostD
 
         Club club = user.getPlayer().getClub();
 
-        return repository.findByClub_Id(club.getId(), pageable).map(this::convertToDto);
+        return repository.findAllByClub_Id(club.getId(), pageable).map(this::convertToDto);
     }
 
     @Override
-    public PostDto makePost(NewPostDto postDto) {
+    public void makePost(NewPostDto postDto) {
 
         User user = getCurrentUser();
 
@@ -76,6 +81,8 @@ public class PostServiceImpl extends BaseServiceImpl<PostRepository, Post, PostD
 
         if(user.getPlayer().getClub() == null)
             throw new EntityNotFoundException("Player does not have a club");
+
+        Player player = user.getPlayer();
 
         Club club = user.getPlayer().getClub();
 
@@ -90,11 +97,17 @@ public class PostServiceImpl extends BaseServiceImpl<PostRepository, Post, PostD
                 .stars(0)
                 .build();
 
-        return convertToDto(repository.save(post));
+        player.getPosts().add(post);
+        club.getPostList().add(post);
+
+        repository.save(post);
+
+        playerRepository.save(player);
+        clubRepository.save(club);
     }
 
     @Override
-    public PostDto starPost(Long id) {
+    public void starPost(Long id) {
 
         User user = getCurrentUser();
 
@@ -117,7 +130,7 @@ public class PostServiceImpl extends BaseServiceImpl<PostRepository, Post, PostD
         post.setStars(post.getStars() + 1);
         post.getPlayersWhoGiveStar().add(user.getPlayer());
 
-        return convertToDto(repository.save(post));
+        repository.save(post);
     }
 
     private User getCurrentUser() {

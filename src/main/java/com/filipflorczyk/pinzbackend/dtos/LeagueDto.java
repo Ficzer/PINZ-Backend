@@ -1,5 +1,8 @@
 package com.filipflorczyk.pinzbackend.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.filipflorczyk.pinzbackend.dtos.ClubStatisticsDto.ClubStatisticDto;
+import com.filipflorczyk.pinzbackend.dtos.MatchsDtos.MatchDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +29,9 @@ public class LeagueDto extends BaseDto {
     @FutureOrPresent(message = "League end date cannot be past")
     private LocalDateTime endDateTime;
 
+    @JsonIgnore
     private List<ClubStatisticDto> clubStatistics = new ArrayList<>();
 
+    @JsonIgnore
     private List<MatchDto> matches = new ArrayList<>();
 }

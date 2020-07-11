@@ -38,7 +38,7 @@ public class Club extends BaseEntity {
     private List<Match> awayMatches;
 
     @OneToMany(mappedBy = "club",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Event> eventList;
 
     @OneToMany(mappedBy = "club",

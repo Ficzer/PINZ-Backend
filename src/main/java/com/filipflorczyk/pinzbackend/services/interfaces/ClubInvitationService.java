@@ -11,11 +11,11 @@ public interface ClubInvitationService extends BaseService<ClubInvitation, ClubI
 
     Page<ClubInvitationDto> getMyClubInvitations(Pageable pageable);
 
-    ClubInvitationDto makeInvitation(NewClubInvitationDto newClubInvitationDto);
+    void makeInvitation(NewClubInvitationDto newClubInvitationDto);
 
     void removeMyInvitation(Long invitationId);
 
     Page<ClubInvitationDto> getMyInvitations(Pageable pageable);
 
-    ClubInvitationDto executeMyInvitation(Long invitationId, boolean isAccepted);
+    void executeMyInvitation(Long invitationId, boolean isAccepted);
 }

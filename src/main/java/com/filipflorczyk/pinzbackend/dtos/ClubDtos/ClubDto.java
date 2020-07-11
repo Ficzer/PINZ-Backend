@@ -1,8 +1,7 @@
 package com.filipflorczyk.pinzbackend.dtos.ClubDtos;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.filipflorczyk.pinzbackend.dtos.BaseDto;
-import com.filipflorczyk.pinzbackend.dtos.ClubStatisticDto;
+import com.filipflorczyk.pinzbackend.dtos.ClubStatisticsDto.ClubStatisticDto;
 import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

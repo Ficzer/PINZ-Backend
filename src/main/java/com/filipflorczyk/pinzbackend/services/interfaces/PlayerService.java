@@ -10,19 +10,19 @@ import org.springframework.data.domain.Pageable;
 
 public interface PlayerService extends BaseService<Player, PlayerDto>{
 
-    PlayerDto updatePlayerStats(Long id, PlayerDto playerDto);
+    void updatePlayerStats(Long id, PlayerDto playerDto);
 
     PlayerDto getMyPlayer();
 
-    PlayerDto addMyPlayer(PlayerInfoDto playerDto);
+    void addMyPlayer(PlayerInfoDto playerDto);
 
-    PlayerDto updateMyPlayerInformation(PlayerInfoDto playerDto);
+    void updateMyPlayerInformation(PlayerInfoDto playerDto);
 
-    PlayerDto updatePlayerStats(Long id, PlayerStatsDto playerStatsDto);
+    void updatePlayerStats(Long id, PlayerStatsDto playerStatsDto);
 
     Page<PlayerDto> getPlayersOfGivenClub(Long id, Pageable pageable);
 
     Page<PlayerDto> getPlayersOfMyClub(Pageable pageable);
 
-    PlayerDto makePlayerTrainer(Long id, BooleanDto booleanDto);
+    void makePlayerTrainer(Long id, BooleanDto booleanDto);
 }

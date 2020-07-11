@@ -11,11 +11,11 @@ public interface ClubService extends BaseService<Club, ClubDto> {
 
     ClubDto getMyClub();
 
-    ClubDto updateClubInfo(Long id, ClubInfoDto clubInfoDto);
+    void updateClubInfo(Long id, ClubInfoDto clubInfoDto);
 
-    ClubDto updateMyClubInfo(ClubInfoDto clubInfoDto);
+    void updateMyClubInfo(ClubInfoDto clubInfoDto);
 
-    ClubDto removePlayerFromMyClub(Long id);
+    void removePlayerFromMyClub(Long id);
 
 
 }

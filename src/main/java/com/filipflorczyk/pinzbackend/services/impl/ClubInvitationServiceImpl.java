@@ -76,7 +76,7 @@ public class ClubInvitationServiceImpl extends BaseServiceImpl<ClubInvitationRep
     }
 
     @Override
-    public ClubInvitationDto makeInvitation(NewClubInvitationDto newClubInvitationDto) {
+    public void makeInvitation(NewClubInvitationDto newClubInvitationDto) {
 
         User currentUser = getCurrentUser();
 
@@ -114,10 +114,10 @@ public class ClubInvitationServiceImpl extends BaseServiceImpl<ClubInvitationRep
         club.getClubInvitations().add(clubInvitation);
         player.getClubInvitations().add(clubInvitation);
 
+        repository.save(clubInvitation);
+
         playerRepository.save(player);
         clubRepository.save(club);
-
-        return convertToDto(repository.save(clubInvitation));
     }
 
     @Override
@@ -157,7 +157,7 @@ public class ClubInvitationServiceImpl extends BaseServiceImpl<ClubInvitationRep
     }
 
     @Override
-    public ClubInvitationDto executeMyInvitation(Long invitationId, boolean isAccepted) {
+    public void executeMyInvitation(Long invitationId, boolean isAccepted) {
 
         User currentUser = getCurrentUser();
 
@@ -183,8 +183,6 @@ public class ClubInvitationServiceImpl extends BaseServiceImpl<ClubInvitationRep
         else{
             repository.deleteById(invitationId);
         }
-
-        return convertToDto(clubInvitation);
     }
 
     private User getCurrentUser() {

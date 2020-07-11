@@ -10,6 +10,6 @@ import org.springframework.data.domain.Pageable;
 public interface PostService extends BaseService<Post, PostDto>  {
 
     Page<PostDto> getAllPostsForMyClub(Pageable pageable);
-    PostDto makePost(NewPostDto postDto);
-    PostDto starPost(Long id);
+    void makePost(NewPostDto postDto);
+    void starPost(Long id);
 }

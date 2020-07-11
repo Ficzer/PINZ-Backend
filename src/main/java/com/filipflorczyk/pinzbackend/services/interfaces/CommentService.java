@@ -10,6 +10,6 @@ import org.springframework.data.domain.Pageable;
 public interface CommentService extends BaseService<Comment, CommentDto> {
 
     Page<CommentDto> getAllCommentsOfPost(Long id, Pageable pageable);
-    CommentDto makeComment(NewCommentDto newCommentDto);
-    CommentDto starComment(Long id, IdentificationDto identificationDto);
+    void makeComment(NewCommentDto newCommentDto);
+    void starComment(Long id, IdentificationDto identificationDto);
 }

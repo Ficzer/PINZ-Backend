@@ -1,6 +1,10 @@
-package com.filipflorczyk.pinzbackend.dtos;
+package com.filipflorczyk.pinzbackend.dtos.MatchsDtos;
 
+import com.filipflorczyk.pinzbackend.dtos.BaseDto;
 import com.filipflorczyk.pinzbackend.dtos.ClubDtos.ClubDto;
+import com.filipflorczyk.pinzbackend.dtos.LeagueDto;
+import com.filipflorczyk.pinzbackend.dtos.PlayerMatchStatDto;
+import com.filipflorczyk.pinzbackend.dtos.StadiumDto;
 import com.filipflorczyk.pinzbackend.entities.MatchResult;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -110,7 +114,7 @@ public class MatchDto extends BaseDto {
 
     private ClubDto awayClub;
 
-    @NotNull(message = "League in math cannot be null")
+    @NotNull(message = "League cannot be null")
     private LeagueDto league;
 
     private StadiumDto stadium;

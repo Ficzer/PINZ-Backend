@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserRoleService extends BaseService<UserRole, UserRoleDto> {
 
-    UserRoleDto addRolesToUser(Long id, BaseDto userRoleDto);
+    void addRolesToUser(Long id, BaseDto userRoleDto);
 
     Page<UserRoleDto> findRolesOfUser(Long id, Pageable pageable);
 }

@@ -1,7 +1,6 @@
 package com.filipflorczyk.pinzbackend.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,6 +8,9 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "matches")
 public class Match extends BaseEntity {
@@ -58,6 +60,8 @@ public class Match extends BaseEntity {
     private Integer homeFouls;
 
     private Integer awayFouls;
+
+    private boolean isCanceled;
 
     @ManyToOne
     @JoinColumn(name = "home_club_id")

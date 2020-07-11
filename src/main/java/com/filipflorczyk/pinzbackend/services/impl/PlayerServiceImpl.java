@@ -54,12 +54,12 @@ public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player,
 
 
     @Override
-    public PlayerDto updatePlayerStats(Long id, PlayerDto playerDto) {
+    public void updatePlayerStats(Long id, PlayerDto playerDto) {
 
         Player player = repository.findById(id).orElseThrow(() -> entityNotFoundException(id, "Player"));
         player.setAppearances(playerDto.getAppearances());
         player.setGoals(player.getGoals());
-        return convertToDto(repository.save(player));
+        repository.save(player);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player,
     }
 
     @Override
-    public PlayerDto addMyPlayer(PlayerInfoDto playerDto) {
+    public void addMyPlayer(PlayerInfoDto playerDto) {
 
         User user = getCurrentUser();
 
@@ -94,14 +94,12 @@ public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player,
 
         user.setPlayer(player);
         player.setUser(user);
-        Player returnPlayer = repository.save(player);
+        repository.save(player);
         userRepository.save(user);
-
-        return convertToDto(returnPlayer);
     }
 
     @Override
-    public PlayerDto updateMyPlayerInformation(PlayerInfoDto playerDto) {
+    public void updateMyPlayerInformation(PlayerInfoDto playerDto) {
 
         User user = getCurrentUser();
 
@@ -118,12 +116,10 @@ public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player,
         myPlayer.setFieldPosition(playerDto.getFieldPosition());
 
         repository.save(myPlayer);
-
-        return convertToDto(myPlayer);
     }
 
     @Override
-    public PlayerDto updatePlayerStats(Long id, PlayerStatsDto playerStatsDto) {
+    public void updatePlayerStats(Long id, PlayerStatsDto playerStatsDto) {
 
         Player player = repository.findById(id)
                 .orElseThrow(() -> entityNotFoundException(id, "name"));
@@ -132,7 +128,7 @@ public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player,
         player.setGoals(playerStatsDto.getGoals());
         player.setStars(playerStatsDto.getStars());
 
-        return convertToDto(repository.save(player));
+        repository.save(player);
     }
 
     @Override
@@ -159,13 +155,13 @@ public class PlayerServiceImpl extends BaseServiceImpl<PlayerRepository, Player,
     }
 
     @Override
-    public PlayerDto makePlayerTrainer(Long id, BooleanDto booleanDto) {
+    public void makePlayerTrainer(Long id, BooleanDto booleanDto) {
 
         Player player = repository.findById(id).orElseThrow(() -> entityNotFoundException(id, "name"));
 
         player.setTrainer(booleanDto.isValue());
 
-        return convertToDto(repository.save(player));
+        repository.save(player);
     }
 
     private User getCurrentUser() {

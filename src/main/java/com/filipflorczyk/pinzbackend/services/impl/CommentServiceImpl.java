@@ -74,7 +74,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentRepository, Comme
     }
 
     @Override
-    public CommentDto makeComment(NewCommentDto newCommentDto) {
+    public void makeComment(NewCommentDto newCommentDto) {
         User user = getCurrentUser();
 
         if (user.getPlayer() == null)
@@ -101,15 +101,13 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentRepository, Comme
 
         post.getCommentList().add(comment);
 
-        CommentDto commentDto = convertToDto(repository.save(comment));
+        repository.save(comment);
 
         postRepository.save(post);
-
-        return commentDto;
     }
 
     @Override
-    public CommentDto starComment(Long id, IdentificationDto identificationDto) {
+    public void starComment(Long id, IdentificationDto identificationDto) {
         User user = getCurrentUser();
 
         if (user.getPlayer() == null)
@@ -131,7 +129,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentRepository, Comme
         comment.setStars(comment.getStars() + 1);
         comment.getPlayersWhoGiveStar().add(user.getPlayer());
 
-        return convertToDto(repository.save(comment));
+        repository.save(comment);
     }
 }
 

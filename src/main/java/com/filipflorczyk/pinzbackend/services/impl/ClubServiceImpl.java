@@ -91,22 +91,22 @@ public class ClubServiceImpl extends BaseServiceImpl<ClubRepository, Club, ClubD
     }
 
     @Override
-    public ClubDto updateClubInfo(Long id, ClubInfoDto clubInfoDto) {
+    public void updateClubInfo(Long id, ClubInfoDto clubInfoDto) {
 
         Club club = repository.findById(id).orElseThrow(() -> entityNotFoundException(id, "name"));
 
         club.setName(clubInfoDto.getName());
 
-        return convertToDto(repository.save(club));
+        repository.save(club);
     }
 
     @Override
-    public ClubDto updateMyClubInfo(ClubInfoDto clubInfoDto) {
-        return null;
+    public void updateMyClubInfo(ClubInfoDto clubInfoDto) {
+
     }
 
     @Override
-    public ClubDto removePlayerFromMyClub(Long id) {
+    public void removePlayerFromMyClub(Long id) {
 
         User currentUser = getCurrentUser();
 
@@ -120,7 +120,7 @@ public class ClubServiceImpl extends BaseServiceImpl<ClubRepository, Club, ClubD
 
         club.setPlayers(club.getPlayers().stream().filter(player -> !player.getId().equals(id)).collect(Collectors.toList()));
 
-        return convertToDto(repository.save(club));
+        repository.save(club);
     }
 
     private User getCurrentUser() {

@@ -1,6 +1,8 @@
-package com.filipflorczyk.pinzbackend.dtos;
+package com.filipflorczyk.pinzbackend.dtos.ClubStatisticsDto;
 
+import com.filipflorczyk.pinzbackend.dtos.BaseDto;
 import com.filipflorczyk.pinzbackend.dtos.ClubDtos.ClubDto;
+import com.filipflorczyk.pinzbackend.dtos.LeagueDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

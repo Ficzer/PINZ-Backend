@@ -1,7 +1,6 @@
 package com.filipflorczyk.pinzbackend.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -11,13 +10,16 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "events")
 public class Event extends BaseEntity {
 
     private String description;
 
-    private LocalDateTime creationTime;
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "club_id")

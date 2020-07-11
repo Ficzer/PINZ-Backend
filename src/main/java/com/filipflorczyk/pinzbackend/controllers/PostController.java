@@ -63,18 +63,18 @@ public class PostController {
     @PostMapping(produces = { "application/json" }, path = "/clubs/my-club/posts")
     public ResponseEntity<?> addPost(@RequestBody @Valid NewPostDto newPostDto){
 
-        PostDto postDtos = postService.makePost(newPostDto);
+        postService.makePost(newPostDto);
 
-        return new ResponseEntity<>(postDtos, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERVISOR', 'USER')")
     @PostMapping(produces = { "application/json" }, path = "/clubs/my-club/posts/{id}/stars")
     public ResponseEntity<?> starPost(@PathVariable Long id){
 
-        PostDto postDtos = postService.starPost(id);
+        postService.starPost(id);
 
-        return new ResponseEntity<>(postDtos, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

@@ -96,7 +96,9 @@ public class ClubController {
     @PutMapping(produces = { "application/json" }, path = "/clubs/{id}")
     public ResponseEntity<?> updateClubInfo(@PathVariable Long id, @RequestBody ClubInfoDto clubInfoDto){
 
-        return new ResponseEntity(clubService.updateClubInfo(id, clubInfoDto), HttpStatus.ACCEPTED);
+        clubService.updateClubInfo(id, clubInfoDto);
+
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERVISOR', 'USER')")

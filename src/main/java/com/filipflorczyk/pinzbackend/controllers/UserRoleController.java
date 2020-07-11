@@ -117,8 +117,8 @@ public class UserRoleController {
     public ResponseEntity<UserRoleDto> addRoleToUser(@PathVariable Long id,
                                                      @RequestBody @Valid BaseDto userRoleDto){
 
-        UserRoleDto userRole = userRoleService.addRolesToUser(id, userRoleDto);
+        userRoleService.addRolesToUser(id, userRoleDto);
 
-        return new ResponseEntity(userRole, HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

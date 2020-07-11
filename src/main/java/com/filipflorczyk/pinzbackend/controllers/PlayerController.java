@@ -104,7 +104,9 @@ public class PlayerController {
     @PostMapping(produces = { "application/json" }, path = "/players/{id}/is-trainer")
     public ResponseEntity<?> makePlayerTrainer(@PathVariable Long id, @RequestBody BooleanDto booleanDto){
 
-        return new ResponseEntity(playerService.makePlayerTrainer(id, booleanDto), HttpStatus.ACCEPTED);
+        playerService.makePlayerTrainer(id, booleanDto);
+
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERVISOR', 'USER')")
@@ -118,28 +120,36 @@ public class PlayerController {
     @PostMapping(produces = {"application/json"}, path = "/users/me/player")
     public ResponseEntity<?> addMyPlayer(@RequestBody @Valid PlayerInfoDto playerInfoDto){
 
-        return new ResponseEntity<>(playerService.addMyPlayer(playerInfoDto), HttpStatus.OK);
+        playerService.addMyPlayer(playerInfoDto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERVISOR', 'USER')")
     @PutMapping(produces = {"application/json"}, path = "/users/me/player")
     public ResponseEntity<?> updateMyPlayer(@RequestBody @Valid PlayerInfoDto playerDto){
 
-        return new ResponseEntity<>(playerService.updateMyPlayerInformation(playerDto), HttpStatus.OK);
+        playerService.updateMyPlayerInformation(playerDto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERVISOR')")
     @PutMapping(produces = {"application/json"}, path = "players/{id}")
     public ResponseEntity<?> updatePlayerStats(@PathVariable Long id, @RequestBody @Valid PlayerStatsDto playerDto){
 
-        return new ResponseEntity<>(playerService.updatePlayerStats(id, playerDto), HttpStatus.OK);
+        playerService.updatePlayerStats(id, playerDto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERVISOR', 'USER')")
     @DeleteMapping(produces = { "application/json" }, path = "/clubs/my-club/players/{id}")
     public ResponseEntity<?> deletePlayerFromMyClub(@PathVariable Long id){
 
-        return new ResponseEntity(clubService.removePlayerFromMyClub(id), HttpStatus.ACCEPTED);
+        clubService.removePlayerFromMyClub(id);
+
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERVISOR', 'USER')")

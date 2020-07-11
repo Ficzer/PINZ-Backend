@@ -57,12 +57,6 @@ public class MatchServiceImpl extends BaseServiceImpl<MatchRepository, Match, Ma
         return matchDto;
     }
 
-
-    @Override
-    public Page<MatchDto> getAllMatchesOfPlayer(Long id, Pageable pageable) {
-        return repository.findAllByPlayer_Id(id, pageable).map(this::convertToDto);
-    }
-
     @Override
     public Page<MatchDto> getAllMatchesOfLeague(Long id, Pageable pageable) {
         return repository.findAllByLeague_Id(id, pageable).map(this::convertToDto);

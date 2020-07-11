@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface MatchService extends BaseService<Match, MatchDto>{
 
-    Page<MatchDto> getAllMatchesOfPlayer(Long id, Pageable pageable);
     Page<MatchDto> getAllMatchesOfLeague(Long id, Pageable pageable);
     Page<MatchDto> getAllMatchesOfClub(Long id, Pageable pageable);
     void addNewMatch(NewMatchDto newMatchDto);

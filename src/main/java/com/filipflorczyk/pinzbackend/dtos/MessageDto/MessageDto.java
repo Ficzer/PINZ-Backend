@@ -1,5 +1,6 @@
-package com.filipflorczyk.pinzbackend.dtos;
+package com.filipflorczyk.pinzbackend.dtos.MessageDto;
 
+import com.filipflorczyk.pinzbackend.dtos.BaseDto;
 import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

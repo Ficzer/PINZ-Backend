@@ -67,9 +67,9 @@ public class CommentController {
     @PostMapping(produces = { "application/json" }, path = "/clubs/my-club/posts/comments")
     public ResponseEntity<?> addComment(@RequestBody @Valid NewCommentDto newCommentDto){
 
-        CommentDto commentDto = commentService.makeComment(newCommentDto);
+        commentService.makeComment(newCommentDto);
 
-        return new ResponseEntity<>(commentDto, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERVISOR', 'USER')")
@@ -78,9 +78,9 @@ public class CommentController {
         IdentificationDto identificationDto = new IdentificationDto();
         identificationDto.setId(commentId);
 
-        CommentDto commentDto = commentService.starComment(id, identificationDto);
+        commentService.starComment(id, identificationDto);
 
-        return new ResponseEntity<>(commentDto, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

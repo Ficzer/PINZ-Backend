@@ -72,7 +72,9 @@ public class ClubInvitationController {
     @PostMapping(produces = { "application/json" }, path = "/clubs/my-club/invitations")
     public ResponseEntity<?> makeMyClubInvitation(@RequestBody @Valid NewClubInvitationDto newClubInvitationDto){
 
-        return new ResponseEntity(clubInvitationService.makeInvitation(newClubInvitationDto), HttpStatus.ACCEPTED);
+        clubInvitationService.makeInvitation(newClubInvitationDto);
+
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERVISOR', 'USER')")
@@ -95,7 +97,9 @@ public class ClubInvitationController {
     @PostMapping(produces = { "application/json" }, path = "/users/me/player/invitations/{id}")
     public ResponseEntity<?> executeMyInvitations(@PathVariable Long id, @RequestBody @Valid  BooleanDto booleanDto){
 
-        return new ResponseEntity(clubInvitationService.executeMyInvitation(id, booleanDto.isValue()), HttpStatus.ACCEPTED);
+        clubInvitationService.executeMyInvitation(id, booleanDto.isValue());
+
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 }
 

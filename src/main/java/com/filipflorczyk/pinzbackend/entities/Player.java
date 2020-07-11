@@ -49,19 +49,19 @@ public class Player extends BaseEntity {
     private Club ownedClub;
 
     @OneToMany(mappedBy = "player",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<PlayerMatchStat> playerMatchStats;
 
     @OneToMany(mappedBy = "senderPlayer",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Message> sentMessages;
 
     @OneToMany(mappedBy = "receiverPlayer",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Message> receivedMessages;
 
     @OneToMany(mappedBy = "author",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Post> posts;
 
     @ManyToMany

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MatchRepository extends JpaRepository<Match, Long>, JpaSpecificationExecutor<Match> {
 
-    Page<Match> findAllByPlayer_Id(Long id, Pageable pageable);
     Page<Match> findAllByLeague_Id(Long id, Pageable pageable);
     Page<Match> findAllByHomeClub_IdOrAwayClub_Id(Long id, Pageable pageable);
 

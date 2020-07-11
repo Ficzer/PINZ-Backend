@@ -123,7 +123,7 @@ public class PlayerMatchStatServiceImpl extends BaseServiceImpl<PlayerMatchStatR
                 .orElseThrow(() -> new EntityNotFoundException("Match with given id not found"));
 
         if(match.getAwayClub().getId() != club.getId() || match.getHomeClub().getId() != club.getId())
-            throw new IllegalArgumentException("You can add new player match stat only for matches of your club");
+            throw new IllegalArgumentException("You can delete player match stat only for matches of your club");
 
         repository.delete(playerMatchStat);
     }

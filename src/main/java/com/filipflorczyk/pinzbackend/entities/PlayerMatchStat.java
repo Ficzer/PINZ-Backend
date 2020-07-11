@@ -1,33 +1,28 @@
 package com.filipflorczyk.pinzbackend.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "player_match_stats")
 public class PlayerMatchStat extends BaseEntity {
 
-    private Integer goals;
+    private boolean isFromHomeClub;
 
-    @ElementCollection
-    private List<Integer> goalsMinutesInMatch;
+    private Integer goals;
 
     private Integer passes;
 
     private Integer yellowCards;
 
-    @ElementCollection
-    private List<Integer> yellowCardsMinutesInMatch;
-
     private Integer redCards;
-
-    @ElementCollection
-    private List<Integer> redCardsMinutesInMatch;
 
     private Integer fouls;
 

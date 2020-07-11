@@ -3,7 +3,7 @@ package com.filipflorczyk.pinzbackend.dtos.MatchsDtos;
 import com.filipflorczyk.pinzbackend.dtos.BaseDto;
 import com.filipflorczyk.pinzbackend.dtos.ClubDtos.ClubDto;
 import com.filipflorczyk.pinzbackend.dtos.LeagueDto;
-import com.filipflorczyk.pinzbackend.dtos.PlayerMatchStatDto;
+import com.filipflorczyk.pinzbackend.dtos.PlayerMatchStatsDto.PlayerMatchStatDto;
 import com.filipflorczyk.pinzbackend.dtos.StadiumDto;
 import com.filipflorczyk.pinzbackend.entities.MatchResult;
 import lombok.Getter;

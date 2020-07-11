@@ -1,5 +1,6 @@
-package com.filipflorczyk.pinzbackend.dtos;
+package com.filipflorczyk.pinzbackend.dtos.PlayerMatchStatsDto;
 
+import com.filipflorczyk.pinzbackend.dtos.BaseDto;
 import com.filipflorczyk.pinzbackend.dtos.MatchsDtos.MatchDto;
 import com.filipflorczyk.pinzbackend.dtos.PlayerDtos.PlayerDto;
 import lombok.Getter;
@@ -14,11 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 public class PlayerMatchStatDto extends BaseDto {
 
+    private boolean isFromHomeClub;
+
     @PositiveOrZero(message = "Player match goals must be positive or zero")
     private Integer goals;
 
-    @PositiveOrZero(message = "Player minute of goals must be positive or zero") //TODO check if null passes
-    private List<Integer> goalsMinutesInMatch;
 
     @PositiveOrZero(message = "Player passes in match must be positive or zero")
     private Integer passes;
@@ -26,14 +27,8 @@ public class PlayerMatchStatDto extends BaseDto {
     @PositiveOrZero(message = "Player yellow cards in match must be positive or zero")
     private Integer yellowCards;
 
-    @PositiveOrZero(message = "Player minute of yellow cards must be positive or zero")
-    private List<Integer> yellowCardsMinutesInMatch;
-
     @PositiveOrZero(message = "Player red cards in match must be positive or zero")
     private Integer redCards;
-
-    @PositiveOrZero(message = "Player minute of red cards must be positive or zero")
-    private List<Integer> redCardsMinutesInMatch;
 
     @PositiveOrZero(message = "Player fouls in match must be positive or zero")
     private Integer fouls;
